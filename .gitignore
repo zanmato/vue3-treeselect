@@ -12,6 +12,7 @@
 Thumbs.db
 
 dist
+gh-pages
 node_modules/
 yarn.lock
 package-lock.json

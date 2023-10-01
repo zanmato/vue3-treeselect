@@ -42,13 +42,6 @@ export default {
 
   render() {
     const { renderValueContainer } = this.$parent;
-    // const transitionGroupProps = {
-    //   props: {
-    //     tag: 'div',
-    //     name: 'vue3-treeselect__multi-value-item--transition',
-    //     appear: true,
-    //   },
-    // }
 
     return renderValueContainer(
       <TransitionGroup

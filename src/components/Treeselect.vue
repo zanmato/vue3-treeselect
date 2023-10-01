@@ -1,13 +1,4 @@
-<template>
-  <div ref="wrapper" :class="wrapperClass">
-    <HiddenFields />
-    <Control ref="control" />
-    <MenuPortal v-if="appendToBody" ref="portal" />
-    <TreeMenu v-else ref="menu" />
-  </div>
-</template>
-
-<script>
+<script lang="jsx">
 import treeselectMixin from "../mixins/treeselectMixin.js";
 import HiddenFields from "./HiddenFields.vue";
 import Control from "./Control.vue";
@@ -42,6 +33,19 @@ export default defineComponent({
         "vue3-treeselect--append-to-body": this.appendToBody
       };
     }
+  },
+  render() {
+    return (
+      <div ref="wrapper" class={this.wrapperClass}>
+        <HiddenFields />
+        <Control ref="control" />
+        {this.appendToBody ? (
+          <MenuPortal ref="portal" />
+        ) : (
+          <TreeMenu ref="menu" />
+        )}
+      </div>
+    );
   }
 });
 </script>
