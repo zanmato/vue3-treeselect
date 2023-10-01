@@ -123,7 +123,6 @@ export default {
       const { instance } = this;
 
       if (instance.rootOptionsStates.isLoading) {
-        console.log("renderLocalSearchMenuInner");
         return this.renderLoadingOptionsTip();
       } else if (instance.rootOptionsStates.loadingError) {
         return this.renderLoadingRootOptionsErrorTip();
@@ -143,12 +142,11 @@ export default {
       const { instance } = this;
       const entry = instance.getRemoteSearchEntry();
       const shouldShowSearchPromptTip =
-        instance.trigger.searchQuery === "" && !instance.defaultOptions;
+        instance.trigger.searchQuery === "" && !instance.options;
       const shouldShowNoResultsTip = shouldShowSearchPromptTip
         ? false
         : entry.isLoaded && entry.options.length === 0;
 
-      console.log("renderAsyncSearchMenuInner");
       if (shouldShowSearchPromptTip) {
         return this.renderSearchPromptTip();
       } else if (entry.isLoading) {

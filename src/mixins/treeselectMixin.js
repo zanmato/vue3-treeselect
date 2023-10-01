@@ -275,15 +275,6 @@ export default {
     },
 
     /**
-     * The default set of options to show before the user starts searching. Used for async search mode.
-     * When set to `true`, the results for search query as a empty string will be autoloaded.
-     * @type {boolean|node[]}
-     */
-    defaultOptions: {
-      default: false
-    },
-
-    /**
      * Whether pressing delete key removes the last item if there is no text input.
      */
     deleteRemoves: {
@@ -1478,11 +1469,8 @@ export default {
       );
 
       if (searchQuery === "") {
-        if (Array.isArray(this.defaultOptions)) {
-          entry.options = this.defaultOptions;
-          entry.isLoaded = true;
-          return entry;
-        } else if (this.defaultOptions !== true) {
+        if (Array.isArray(this.options)) {
+          entry.options = this.options;
           entry.isLoaded = true;
           return entry;
         }
@@ -1654,7 +1642,7 @@ export default {
       this.menu.isOpen = true;
       this.$nextTick(this.resetHighlightedOptionWhenNecessary);
       this.$nextTick(this.restoreMenuScrollPosition);
-      if (!this.options && !this.async) {
+      if (!this.options) {
         this.loadRootOptions();
       }
       this.toggleClickOutsideEvent(true);
@@ -2233,14 +2221,11 @@ export default {
     if (this.autoFocus) {
       this.focusInput();
     }
-    if (!this.options && !this.async && this.autoLoadRootOptions) {
+    if (!this.options && this.autoLoadRootOptions) {
       this.loadRootOptions();
     }
     if (this.alwaysOpen) {
       this.openMenu();
-    }
-    if (this.async && this.defaultOptions) {
-      this.handleRemoteSearch();
     }
   },
 

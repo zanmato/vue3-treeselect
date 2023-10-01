@@ -194,17 +194,6 @@ export default {
         )} to make all branch nodes expanded by default.`
       },
       {
-        name: "defaultOptions",
-        type: `Boolean | ${code("node[]")}`,
-        defaultValue: code("false"),
-        description: `The default set of options to show before the user starts searching. Used for ${link(
-          "#async-searching",
-          "async search mode"
-        )}. When set to ${code(
-          "true"
-        )}, the results for search query as a empty string will be autoloaded.`
-      },
-      {
         name: "deleteRemoves",
         type: "Boolean",
         defaultValue: code("true"),
