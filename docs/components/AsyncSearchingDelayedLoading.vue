@@ -1,12 +1,12 @@
 <template>
   <treeselect
+    v-model="value"
     :multiple="true"
     :options="options"
     :auto-load-root-options="false"
     :async="true"
     :load-options="loadOptions"
-    placeholder="Try expanding any folder option..."
-    v-model="value" />
+    placeholder="Try expanding any folder option..." />
 </template>
 
 <script>

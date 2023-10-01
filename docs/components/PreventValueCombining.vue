@@ -1,55 +1,85 @@
 <template>
   <div>
     <treeselect
+      v-model="value"
       :multiple="true"
       :options="options"
-      :value-consists-of="valueConsistsOf"
-      v-model="value"
-      />
+      :value-consists-of="valueConsistsOf" />
     <treeselect-value :value="value" />
     <p><strong>Value consists of:</strong></p>
     <p class="options">
-      <label><input type="radio" value="ALL" v-model="valueConsistsOf">All</label><br>
-      <label><input type="radio" value="BRANCH_PRIORITY" v-model="valueConsistsOf">Branch priority</label><br>
-      <label><input type="radio" value="LEAF_PRIORITY" v-model="valueConsistsOf">Leaf priority</label><br>
-      <label><input type="radio" value="ALL_WITH_INDETERMINATE" v-model="valueConsistsOf">All with indeterminate</label><br>
+      <label>
+        <input v-model="valueConsistsOf" type="radio" value="ALL" />
+        All
+      </label>
+      <br />
+      <label>
+        <input v-model="valueConsistsOf" type="radio" value="BRANCH_PRIORITY" />
+        Branch priority
+      </label>
+      <br />
+      <label>
+        <input v-model="valueConsistsOf" type="radio" value="LEAF_PRIORITY" />
+        Leaf priority
+      </label>
+      <br />
+      <label>
+        <input
+          v-model="valueConsistsOf"
+          type="radio"
+          value="ALL_WITH_INDETERMINATE" />
+        All with indeterminate
+      </label>
+      <br />
     </p>
   </div>
 </template>
 
 <script>
-  export default {
-    data: () => ({
-      value: [ 'team-i' ],
-      valueConsistsOf: 'BRANCH_PRIORITY',
-      options: [ {
-        id: 'company',
-        label: 'Company 🏢',
-        children: [ {
-          id: 'team-i',
-          label: 'Team I 👥',
-          children: [ {
-            id: 'person-a',
-            label: 'Person A 👱',
-          }, {
-            id: 'person-b',
-            label: 'Person B 🧔',
-          } ],
-        }, {
-          id: 'team-ii',
-          label: 'Team II 👥',
-          children: [ {
-            id: 'person-c',
-            label: 'Person C 👳',
-          }, {
-            id: 'person-d',
-            label: 'Person D 👧',
-          } ],
-        }, {
-          id: 'person-e',
-          label: 'Person E 👩',
-        } ],
-      } ],
-    }),
-  }
+export default {
+  data: () => ({
+    value: ["team-i"],
+    valueConsistsOf: "BRANCH_PRIORITY",
+    options: [
+      {
+        id: "company",
+        label: "Company 🏢",
+        children: [
+          {
+            id: "team-i",
+            label: "Team I 👥",
+            children: [
+              {
+                id: "person-a",
+                label: "Person A 👱"
+              },
+              {
+                id: "person-b",
+                label: "Person B 🧔"
+              }
+            ]
+          },
+          {
+            id: "team-ii",
+            label: "Team II 👥",
+            children: [
+              {
+                id: "person-c",
+                label: "Person C 👳"
+              },
+              {
+                id: "person-d",
+                label: "Person D 👧"
+              }
+            ]
+          },
+          {
+            id: "person-e",
+            label: "Person E 👩"
+          }
+        ]
+      }
+    ]
+  })
+};
 </script>

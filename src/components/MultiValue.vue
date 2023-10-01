@@ -24,7 +24,9 @@ export default {
       const { instance } = this;
       const count = instance.internalValue.length - instance.limit;
 
-      if (count <= 0) return null;
+      if (count <= 0) {
+        return null;
+      }
 
       return (
         <div

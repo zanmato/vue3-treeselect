@@ -29,7 +29,9 @@ const PortalTarget = {
   mounted() {
     const { instance } = this;
 
-    if (instance.menu.isOpen) this.setupHandlers();
+    if (instance.menu.isOpen) {
+      this.setupHandlers();
+    }
   },
 
   methods: {
@@ -50,7 +52,9 @@ const PortalTarget = {
       const $control = instance.getControl();
 
       // istanbul ignore next
-      if (this.controlResizeAndScrollEventListeners) return;
+      if (this.controlResizeAndScrollEventListeners) {
+        return;
+      }
 
       this.controlResizeAndScrollEventListeners = {
         remove: setupResizeAndScrollEventListeners(
@@ -65,7 +69,9 @@ const PortalTarget = {
       const $control = instance.getControl();
 
       // istanbul ignore next
-      if (this.controlSizeWatcher) return;
+      if (this.controlSizeWatcher) {
+        return;
+      }
 
       this.controlSizeWatcher = {
         remove: watchSize($control, () => {
@@ -76,14 +82,18 @@ const PortalTarget = {
     },
 
     removeControlResizeAndScrollEventListeners() {
-      if (!this.controlResizeAndScrollEventListeners) return;
+      if (!this.controlResizeAndScrollEventListeners) {
+        return;
+      }
 
       this.controlResizeAndScrollEventListeners.remove();
       this.controlResizeAndScrollEventListeners = null;
     },
 
     removeControlSizeWatcher() {
-      if (!this.controlSizeWatcher) return;
+      if (!this.controlSizeWatcher) {
+        return;
+      }
 
       this.controlSizeWatcher.remove();
       this.controlSizeWatcher = null;
@@ -192,8 +202,9 @@ export default {
   },
 
   render() {
-    if (!placeholder)
+    if (!placeholder) {
       placeholder = <div class="vue-treeselect__menu-placeholder" />;
+    }
 
     return placeholder;
   }

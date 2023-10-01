@@ -38,7 +38,9 @@ function watchSizeForIE9($el, listener) {
   };
   const unwatch = () => {
     removeFromArray(registered, item);
-    if (!registered.length) stop();
+    if (!registered.length) {
+      stop();
+    }
   };
 
   registered.push(item);

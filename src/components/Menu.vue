@@ -53,7 +53,9 @@ export default {
   mounted() {
     const { instance } = this;
 
-    if (instance.menu.isOpen) this.$nextTick(this.onMenuOpen);
+    if (instance.menu.isOpen) {
+      this.$nextTick(this.onMenuOpen);
+    }
   },
 
   unmounted() {
@@ -64,7 +66,9 @@ export default {
     renderMenu() {
       const { instance } = this;
 
-      if (!instance.menu.isOpen) return null;
+      if (!instance.menu.isOpen) {
+        return null;
+      }
 
       return (
         <div
@@ -119,7 +123,7 @@ export default {
       const { instance } = this;
 
       if (instance.rootOptionsStates.isLoading) {
-        console.log('renderLocalSearchMenuInner');
+        console.log("renderLocalSearchMenuInner");
         return this.renderLoadingOptionsTip();
       } else if (instance.rootOptionsStates.loadingError) {
         return this.renderLoadingRootOptionsErrorTip();
@@ -144,7 +148,7 @@ export default {
         ? false
         : entry.isLoaded && entry.options.length === 0;
 
-        console.log('renderAsyncSearchMenuInner');
+      console.log("renderAsyncSearchMenuInner");
       if (shouldShowSearchPromptTip) {
         return this.renderSearchPromptTip();
       } else if (entry.isLoading) {
@@ -257,7 +261,9 @@ export default {
 
     adjustMenuOpenDirection() {
       const { instance } = this;
-      if (!instance.menu.isOpen) return;
+      if (!instance.menu.isOpen) {
+        return;
+      }
 
       const $menu = instance.getMenu();
       const $control = instance.getControl();
@@ -289,7 +295,9 @@ export default {
       const $menu = instance.getMenu();
 
       // istanbul ignore next
-      if (this.menuSizeWatcher) return;
+      if (this.menuSizeWatcher) {
+        return;
+      }
 
       this.menuSizeWatcher = {
         remove: watchSize($menu, this.adjustMenuOpenDirection)
@@ -301,7 +309,9 @@ export default {
       const $control = instance.getControl();
 
       // istanbul ignore next
-      if (this.menuResizeAndScrollEventListeners) return;
+      if (this.menuResizeAndScrollEventListeners) {
+        return;
+      }
 
       this.menuResizeAndScrollEventListeners = {
         remove: setupResizeAndScrollEventListeners(
@@ -312,14 +322,18 @@ export default {
     },
 
     removeMenuSizeWatcher() {
-      if (!this.menuSizeWatcher) return;
+      if (!this.menuSizeWatcher) {
+        return;
+      }
 
       this.menuSizeWatcher.remove();
       this.menuSizeWatcher = null;
     },
 
     removeMenuResizeAndScrollEventListeners() {
-      if (!this.menuResizeAndScrollEventListeners) return;
+      if (!this.menuResizeAndScrollEventListeners) {
+        return;
+      }
 
       this.menuResizeAndScrollEventListeners.remove();
       this.menuResizeAndScrollEventListeners = null;

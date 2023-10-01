@@ -53,7 +53,6 @@ const props = defineProps({
     required: true
   }
 });
-console.log(props.name);
 
 const state = reactive({
   current: "html"

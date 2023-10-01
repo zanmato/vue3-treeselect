@@ -2,6 +2,7 @@
   <div>
     <div :dir="rtl ? 'rtl' : 'ltr'">
       <treeselect
+        v-model="value"
         name="demo"
         :multiple="multiple"
         :clearable="clearable"
@@ -15,61 +16,92 @@
         :append-to-body="appendToBody"
         :options="options"
         :limit="3"
-        :max-height="200"
-        v-model="value"
-        />
+        :max-height="200" />
     </div>
     <treeselect-value :value="value" />
     <p>
-      <label><input type="checkbox" v-model="multiple">Multi-select</label>
-      <label><input type="checkbox" v-model="clearable">Clearable</label>
-      <label><input type="checkbox" v-model="searchable">Searchable</label>
-      <label><input type="checkbox" v-model="disabled">Disabled</label>
+      <label>
+        <input v-model="multiple" type="checkbox" />
+        Multi-select
+      </label>
+      <label>
+        <input v-model="clearable" type="checkbox" />
+        Clearable
+      </label>
+      <label>
+        <input v-model="searchable" type="checkbox" />
+        Searchable
+      </label>
+      <label>
+        <input v-model="disabled" type="checkbox" />
+        Disabled
+      </label>
     </p>
     <p>
-      <label><input type="checkbox" v-model="openOnClick">Open on click</label>
-      <label><input type="checkbox" v-model="openOnFocus">Open on focus</label>
+      <label>
+        <input v-model="openOnClick" type="checkbox" />
+        Open on click
+      </label>
+      <label>
+        <input v-model="openOnFocus" type="checkbox" />
+        Open on focus
+      </label>
     </p>
     <p>
-      <label><input type="checkbox" v-model="clearOnSelect">Clear on select</label>
-      <label><input type="checkbox" v-model="closeOnSelect">Close on select</label>
+      <label>
+        <input v-model="clearOnSelect" type="checkbox" />
+        Clear on select
+      </label>
+      <label>
+        <input v-model="closeOnSelect" type="checkbox" />
+        Close on select
+      </label>
     </p>
     <p>
-      <label><input type="checkbox" v-model="alwaysOpen">Always open</label>
-      <label><input type="checkbox" v-model="appendToBody">Append to body</label>
-      <label><input type="checkbox" v-model="rtl">RTL mode</label>
+      <label>
+        <input v-model="alwaysOpen" type="checkbox" />
+        Always open
+      </label>
+      <label>
+        <input v-model="appendToBody" type="checkbox" />
+        Append to body
+      </label>
+      <label>
+        <input v-model="rtl" type="checkbox" />
+        RTL mode
+      </label>
     </p>
   </div>
 </template>
 
 <script>
-  import { generateOptions } from './utils'
+import { generateOptions } from "./utils";
 
-  export default {
-    data: () => ({
-      multiple: true,
-      clearable: true,
-      searchable: true,
-      disabled: false,
-      openOnClick: true,
-      openOnFocus: false,
-      clearOnSelect: true,
-      closeOnSelect: false,
-      alwaysOpen: false,
-      appendToBody: false,
-      rtl: false,
-      value: [ 'a' ],
-      options: generateOptions(2, 3),
-    }),
+export default {
+  data: () => ({
+    multiple: true,
+    clearable: true,
+    searchable: true,
+    disabled: false,
+    openOnClick: true,
+    openOnFocus: false,
+    clearOnSelect: true,
+    closeOnSelect: false,
+    alwaysOpen: false,
+    appendToBody: false,
+    rtl: false,
+    value: ["a"],
+    options: generateOptions(2, 3)
+  }),
 
-    watch: {
-      multiple(newValue) {
-        if (newValue) {
-          this.value = this.value ? [ this.value ] : []
-        } else {
-          this.value = this.value[0]
-        }
-      },
-    },
+  watch: {
+    multiple(newValue) {
+      if (newValue) {
+        this.value = this.value ? [this.value] : [];
+      } else {
+        this.value = this.value[0];
+      }
+    }
   }
+};
 </script>

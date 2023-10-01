@@ -41,9 +41,15 @@ import {
 function sortValueByIndex(a, b) {
   let i = 0;
   do {
-    if (a.level < i) return -1;
-    if (b.level < i) return 1;
-    if (a.index[i] !== b.index[i]) return a.index[i] - b.index[i];
+    if (a.level < i) {
+      return -1;
+    }
+    if (b.level < i) {
+      return 1;
+    }
+    if (a.index[i] !== b.index[i]) {
+      return a.index[i] - b.index[i];
+    }
     i++;
   } while (true);
 }
@@ -61,8 +67,12 @@ function createAsyncOptionsStates() {
 }
 
 function stringifyOptionPropValue(value) {
-  if (typeof value === "string") return value;
-  if (typeof value === "number" && !isNaN(value)) return value + "";
+  if (typeof value === "string") {
+    return value;
+  }
+  if (typeof value === "number" && !isNaN(value)) {
+    return value + "";
+  }
   // istanbul ignore next
   return "";
 }
@@ -747,13 +757,17 @@ export default {
       } else if (this.valueConsistsOf === BRANCH_PRIORITY) {
         internalValue = this.forest.selectedNodeIds.filter((id) => {
           const node = this.getNode(id);
-          if (node.isRootNode) return true;
+          if (node.isRootNode) {
+            return true;
+          }
           return !this.isSelected(node.parentNode);
         });
       } else if (this.valueConsistsOf === LEAF_PRIORITY) {
         internalValue = this.forest.selectedNodeIds.filter((id) => {
           const node = this.getNode(id);
-          if (node.isLeaf) return true;
+          if (node.isLeaf) {
+            return true;
+          }
           return node.children.length === 0;
         });
       } else if (this.valueConsistsOf === ALL_WITH_INDETERMINATE) {
@@ -761,8 +775,12 @@ export default {
         internalValue = this.forest.selectedNodeIds.slice();
         this.selectedNodes.forEach((selectedNode) => {
           selectedNode.ancestors.forEach((ancestor) => {
-            if (includes(indeterminateNodeIds, ancestor.id)) return;
-            if (includes(internalValue, ancestor.id)) return;
+            if (includes(indeterminateNodeIds, ancestor.id)) {
+              return;
+            }
+            if (includes(internalValue, ancestor.id)) {
+              return;
+            }
             indeterminateNodeIds.push(ancestor.id);
           });
         });
@@ -857,8 +875,11 @@ export default {
 
   watch: {
     alwaysOpen(newValue) {
-      if (newValue) this.openMenu();
-      else this.closeMenu();
+      if (newValue) {
+        this.openMenu();
+      } else {
+        this.closeMenu();
+      }
     },
 
     branchNodesFirst() {
@@ -867,9 +888,11 @@ export default {
 
     disabled(newValue) {
       // force close the menu after disabling the control
-      if (newValue && this.menu.isOpen) this.closeMenu();
-      else if (!newValue && !this.menu.isOpen && this.alwaysOpen)
+      if (newValue && this.menu.isOpen) {
+        this.closeMenu();
+      } else if (!newValue && !this.menu.isOpen && this.alwaysOpen) {
         this.openMenu();
+      }
     },
 
     flat() {
@@ -881,8 +904,9 @@ export default {
       // #122
       // Vue would trigger this watcher when `newValue` and `oldValue` are shallow-equal.
       // We emit the `input` event only when the value actually changes.
-      if (hasChanged)
+      if (hasChanged) {
         this.$emit("update:modelValue", this.getValue(), this.getInstanceId());
+      }
     },
 
     matchKeys() {
@@ -893,12 +917,16 @@ export default {
       // We need to rebuild the state when switching from single-select mode
       // to multi-select mode.
       // istanbul ignore else
-      if (newValue) this.buildForestState();
+      if (newValue) {
+        this.buildForestState();
+      }
     },
 
     options: {
       handler() {
-        if (this.async) return;
+        if (this.async) {
+          return;
+        }
         // Re-initialize options when the `options` prop has changed.
         this.initialize();
         this.rootOptionsStates.isLoaded = Array.isArray(this.options);
@@ -924,7 +952,9 @@ export default {
     modelValue() {
       const nodeIdsFromValue = this.extractCheckedNodeIdsFromValue();
       const hasChanged = quickDiff(nodeIdsFromValue, this.internalValue);
-      if (hasChanged) this.fixSelectedNodeIds(nodeIdsFromValue);
+      if (hasChanged) {
+        this.fixSelectedNodeIds(nodeIdsFromValue);
+      }
     }
   },
 
@@ -1021,7 +1051,9 @@ export default {
         () => `Invalid node id: ${nodeId}`
       );
 
-      if (nodeId == null) return null;
+      if (nodeId == null) {
+        return null;
+      }
 
       return nodeId in this.forest.nodeMap
         ? this.forest.nodeMap[nodeId]
@@ -1055,7 +1087,9 @@ export default {
     },
 
     extractCheckedNodeIdsFromValue() {
-      if (this.modelValue == null) return [];
+      if (this.modelValue == null) {
+        return [];
+      }
 
       if (this.valueFormat === "id") {
         return this.multiple ? this.modelValue.slice() : [this.modelValue];
@@ -1103,10 +1137,11 @@ export default {
         nodeIdListOfPrevValue.forEach((nodeId) => {
           nextSelectedNodeIds.push(nodeId);
           const node = this.getNode(nodeId);
-          if (node.isBranch)
+          if (node.isBranch) {
             this.traverseDescendantsBFS(node, (descendant) => {
               nextSelectedNodeIds.push(descendant.id);
             });
+          }
         });
       } else if (this.valueConsistsOf === LEAF_PRIORITY) {
         const map = createMap();
@@ -1115,10 +1150,15 @@ export default {
           const nodeId = queue.shift();
           const node = this.getNode(nodeId);
           nextSelectedNodeIds.push(nodeId);
-          if (node.isRootNode) continue;
-          if (!(node.parentNode.id in map))
+          if (node.isRootNode) {
+            continue;
+          }
+          if (!(node.parentNode.id in map)) {
             map[node.parentNode.id] = node.parentNode.children.length;
-          if (--map[node.parentNode.id] === 0) queue.push(node.parentNode.id);
+          }
+          if (--map[node.parentNode.id] === 0) {
+            queue.push(node.parentNode.id);
+          }
         }
       } else if (this.valueConsistsOf === ALL_WITH_INDETERMINATE) {
         const map = createMap();
@@ -1130,10 +1170,15 @@ export default {
           const nodeId = queue.shift();
           const node = this.getNode(nodeId);
           nextSelectedNodeIds.push(nodeId);
-          if (node.isRootNode) continue;
-          if (!(node.parentNode.id in map))
+          if (node.isRootNode) {
+            continue;
+          }
+          if (!(node.parentNode.id in map)) {
             map[node.parentNode.id] = node.parentNode.children.length;
-          if (--map[node.parentNode.id] === 0) queue.push(node.parentNode.id);
+          }
+          if (--map[node.parentNode.id] === 0) {
+            queue.push(node.parentNode.id);
+          }
         }
       }
 
@@ -1144,7 +1189,9 @@ export default {
       // If `nextSelectedNodeIds` doesn't actually differ from old `selectedNodeIds`,
       // we don't make the assignment to avoid triggering its watchers which may cause
       // unnecessary calculations.
-      if (hasChanged) this.forest.selectedNodeIds = nextSelectedNodeIds;
+      if (hasChanged) {
+        this.forest.selectedNodeIds = nextSelectedNodeIds;
+      }
 
       this.buildForestState();
     },
@@ -1153,7 +1200,9 @@ export default {
       // In case there is any selected node that is not present in the new `options` array.
       // It could be useful for async search mode.
       this.forest.selectedNodeIds.forEach((id) => {
-        if (!prevNodeMap[id]) return;
+        if (!prevNodeMap[id]) {
+          return;
+        }
         const node = {
           ...prevNodeMap[id],
           isFallbackNode: true
@@ -1169,18 +1218,24 @@ export default {
 
     traverseDescendantsBFS(parentNode, callback) {
       // istanbul ignore if
-      if (!parentNode.isBranch) return;
+      if (!parentNode.isBranch) {
+        return;
+      }
       const queue = parentNode.children.slice();
       while (queue.length) {
         const currNode = queue[0];
-        if (currNode.isBranch) queue.push(...currNode.children);
+        if (currNode.isBranch) {
+          queue.push(...currNode.children);
+        }
         callback(currNode);
         queue.shift();
       }
     },
 
     traverseDescendantsDFS(parentNode, callback) {
-      if (!parentNode.isBranch) return;
+      if (!parentNode.isBranch) {
+        return;
+      }
       parentNode.children.forEach((child) => {
         // deep-level node first
         this.traverseDescendantsDFS(child, callback);
@@ -1242,7 +1297,9 @@ export default {
       evt.preventDefault();
       evt.stopPropagation();
 
-      if (this.disabled) return;
+      if (this.disabled) {
+        return;
+      }
 
       const isClickedOnValueContainer = this.getValueContainer().$el.contains(
         evt.target
@@ -1329,16 +1386,18 @@ export default {
             (ancestor) =>
               this.localSearch.countMap[ancestor.id][ALL_DESCENDANTS]++
           );
-          if (node.isLeaf)
+          if (node.isLeaf) {
             node.ancestors.forEach(
               (ancestor) =>
                 this.localSearch.countMap[ancestor.id][LEAF_DESCENDANTS]++
             );
+          }
           if (node.parentNode !== NO_PARENT_NODE) {
             this.localSearch.countMap[node.parentNode.id][ALL_CHILDREN] += 1;
             // istanbul ignore else
-            if (node.isLeaf)
+            if (node.isLeaf) {
               this.localSearch.countMap[node.parentNode.id][LEAF_CHILDREN] += 1;
+            }
           }
         }
 
@@ -1411,7 +1470,9 @@ export default {
         () => entry.options,
         () => {
           // TODO: potential redundant re-initialization.
-          if (this.trigger.searchQuery === searchQuery) this.initialize();
+          if (this.trigger.searchQuery === searchQuery) {
+            this.initialize();
+          }
         },
         { deep: true }
       );
@@ -1442,18 +1503,22 @@ export default {
 
     shouldOptionBeIncludedInSearchResult(node) {
       // 1) This option is matched.
-      if (node.isMatched) return true;
+      if (node.isMatched) {
+        return true;
+      }
       // 2) This option is not matched, but has matched descendant(s).
       if (
         node.isBranch &&
         node.hasMatchedDescendants &&
         !this.flattenSearchResults
-      )
+      ) {
         return true;
+      }
       // 3) This option's parent has no matched descendants,
       //    but after being expanded, all its children should be shown.
-      if (!node.isRootNode && node.parentNode.showAllChildrenOnSearch)
+      if (!node.isRootNode && node.parentNode.showAllChildrenOnSearch) {
         return true;
+      }
       // 4) The default case.
       return false;
     },
@@ -1493,7 +1558,9 @@ export default {
           const $option = $menu.querySelector(
             `.vue-treeselect__option[data-id="${node.id}"]`
           );
-          if ($option) scrollIntoView($menu, $option);
+          if ($option) {
+            scrollIntoView($menu, $option);
+          }
         };
 
         // In case `openMenu()` is just called and the menu is not rendered yet.
@@ -1520,35 +1587,46 @@ export default {
     },
 
     highlightFirstOption() {
-      if (!this.hasVisibleOptions) return;
+      if (!this.hasVisibleOptions) {
+        return;
+      }
 
       const first = this.visibleOptionIds[0];
       this.setCurrentHighlightedOption(this.getNode(first));
     },
 
     highlightPrevOption() {
-      if (!this.hasVisibleOptions) return;
+      if (!this.hasVisibleOptions) {
+        return;
+      }
 
       const prev = this.visibleOptionIds.indexOf(this.menu.current) - 1;
-      if (prev === -1) return this.highlightLastOption();
+      if (prev === -1) {
+        return this.highlightLastOption();
+      }
       this.setCurrentHighlightedOption(
         this.getNode(this.visibleOptionIds[prev])
       );
     },
 
     highlightNextOption() {
-      if (!this.hasVisibleOptions) return;
+      if (!this.hasVisibleOptions) {
+        return;
+      }
 
       const next = this.visibleOptionIds.indexOf(this.menu.current) + 1;
-      if (next === this.visibleOptionIds.length)
+      if (next === this.visibleOptionIds.length) {
         return this.highlightFirstOption();
+      }
       this.setCurrentHighlightedOption(
         this.getNode(this.visibleOptionIds[next])
       );
     },
 
     highlightLastOption() {
-      if (!this.hasVisibleOptions) return;
+      if (!this.hasVisibleOptions) {
+        return;
+      }
 
       const last = getLast(this.visibleOptionIds);
       this.setCurrentHighlightedOption(this.getNode(last));
@@ -1559,7 +1637,9 @@ export default {
     },
 
     closeMenu() {
-      if (!this.menu.isOpen || (!this.disabled && this.alwaysOpen)) return;
+      if (!this.menu.isOpen || (!this.disabled && this.alwaysOpen)) {
+        return;
+      }
       this.saveMenuScrollPosition();
       this.menu.isOpen = false;
       this.toggleClickOutsideEvent(false);
@@ -1568,11 +1648,15 @@ export default {
     },
 
     openMenu() {
-      if (this.disabled || this.menu.isOpen) return;
+      if (this.disabled || this.menu.isOpen) {
+        return;
+      }
       this.menu.isOpen = true;
       this.$nextTick(this.resetHighlightedOptionWhenNecessary);
       this.$nextTick(this.restoreMenuScrollPosition);
-      if (!this.options && !this.async) this.loadRootOptions();
+      if (!this.options && !this.async) {
+        this.loadRootOptions();
+      }
       this.toggleClickOutsideEvent(true);
       this.$emit("open", this.getInstanceId());
     },
@@ -1590,7 +1674,9 @@ export default {
 
       if (this.localSearch.active) {
         nextState = node.isExpandedOnSearch = !node.isExpandedOnSearch;
-        if (nextState) node.showAllChildrenOnSearch = true;
+        if (nextState) {
+          node.showAllChildrenOnSearch = true;
+        }
       } else {
         nextState = node.isExpanded = !node.isExpanded;
       }
@@ -1713,10 +1799,11 @@ export default {
               ? this.normalize(normalized, children, prevNodeMap)
               : [];
 
-            if (isDefaultExpanded === true)
+            if (isDefaultExpanded === true) {
               normalized.ancestors.forEach((ancestor) => {
                 ancestor.isExpanded = true;
               });
+            }
 
             if (!isLoaded && typeof this.loadOptions !== "function") {
               warning(
@@ -1732,14 +1819,19 @@ export default {
           normalized.ancestors.forEach(
             (ancestor) => ancestor.count[ALL_DESCENDANTS]++
           );
-          if (isLeaf)
+          if (isLeaf) {
             normalized.ancestors.forEach(
               (ancestor) => ancestor.count[LEAF_DESCENDANTS]++
             );
+          }
           if (!isRootNode) {
             parentNode.count[ALL_CHILDREN] += 1;
-            if (isLeaf) parentNode.count[LEAF_CHILDREN] += 1;
-            if (isDisabled) parentNode.hasDisabledDescendants = true;
+            if (isLeaf) {
+              parentNode.count[LEAF_CHILDREN] += 1;
+            }
+            if (isDisabled) {
+              parentNode.hasDisabledDescendants = true;
+            }
           }
 
           // Preserve previous states.
@@ -1990,13 +2082,15 @@ export default {
 
         if (this.autoSelectAncestors) {
           node.ancestors.forEach((ancestor) => {
-            if (!this.isSelected(ancestor) && !ancestor.isDisabled)
+            if (!this.isSelected(ancestor) && !ancestor.isDisabled) {
               this.addValue(ancestor);
+            }
           });
         } else if (this.autoSelectDescendants) {
           this.traverseDescendantsBFS(node, (descendant) => {
-            if (!this.isSelected(descendant) && !descendant.isDisabled)
+            if (!this.isSelected(descendant) && !descendant.isDisabled) {
               this.addValue(descendant);
+            }
           });
         }
 
@@ -2025,8 +2119,11 @@ export default {
       if (isFullyChecked) {
         let curr = node;
         while ((curr = curr.parentNode) !== NO_PARENT_NODE) {
-          if (curr.children.every(this.isSelected)) this.addValue(curr);
-          else break;
+          if (curr.children.every(this.isSelected)) {
+            this.addValue(curr);
+          } else {
+            break;
+          }
         }
       }
     },
@@ -2042,13 +2139,15 @@ export default {
 
         if (this.autoDeselectAncestors) {
           node.ancestors.forEach((ancestor) => {
-            if (this.isSelected(ancestor) && !ancestor.isDisabled)
+            if (this.isSelected(ancestor) && !ancestor.isDisabled) {
               this.removeValue(ancestor);
+            }
           });
         } else if (this.autoDeselectDescendants) {
           this.traverseDescendantsBFS(node, (descendant) => {
-            if (this.isSelected(descendant) && !descendant.isDisabled)
+            if (this.isSelected(descendant) && !descendant.isDisabled) {
               this.removeValue(descendant);
+            }
           });
         }
 
@@ -2077,8 +2176,11 @@ export default {
 
         let curr = node;
         while ((curr = curr.parentNode) !== NO_PARENT_NODE) {
-          if (this.isSelected(curr)) this.removeValue(curr);
-          else break;
+          if (this.isSelected(curr)) {
+            this.removeValue(curr);
+          } else {
+            break;
+          }
         }
       }
     },
@@ -2094,8 +2196,12 @@ export default {
     },
 
     removeLastValue() {
-      if (!this.hasValue) return;
-      if (this.single) return this.clear();
+      if (!this.hasValue) {
+        return;
+      }
+      if (this.single) {
+        return this.clear();
+      }
       const lastValue = getLast(this.internalValue);
       const lastSelectedNode = this.getNode(lastValue);
       this.select(lastSelectedNode); // deselect
@@ -2104,13 +2210,17 @@ export default {
     saveMenuScrollPosition() {
       const $menu = this.getMenu();
       // istanbul ignore else
-      if ($menu) this.menu.lastScrollPosition = $menu.scrollTop;
+      if ($menu) {
+        this.menu.lastScrollPosition = $menu.scrollTop;
+      }
     },
 
     restoreMenuScrollPosition() {
       const $menu = this.getMenu();
       // istanbul ignore else
-      if ($menu) $menu.scrollTop = this.menu.lastScrollPosition;
+      if ($menu) {
+        $menu.scrollTop = this.menu.lastScrollPosition;
+      }
     }
   },
 
@@ -2120,11 +2230,18 @@ export default {
   },
 
   mounted() {
-    if (this.autoFocus) this.focusInput();
-    if (!this.options && !this.async && this.autoLoadRootOptions)
+    if (this.autoFocus) {
+      this.focusInput();
+    }
+    if (!this.options && !this.async && this.autoLoadRootOptions) {
       this.loadRootOptions();
-    if (this.alwaysOpen) this.openMenu();
-    if (this.async && this.defaultOptions) this.handleRemoteSearch();
+    }
+    if (this.alwaysOpen) {
+      this.openMenu();
+    }
+    if (this.async && this.defaultOptions) {
+      this.handleRemoteSearch();
+    }
   },
 
   unmounted() {

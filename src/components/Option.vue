@@ -59,7 +59,9 @@ const Option = {
     },
 
     renderSubOptionsList() {
-      if (!this.shouldExpand) return null;
+      if (!this.shouldExpand) {
+        return null;
+      }
 
       return (
         <div class="vue-treeselect__list">
@@ -74,7 +76,9 @@ const Option = {
     renderArrow() {
       const { instance, node } = this;
 
-      if (instance.shouldFlattenOptions && this.shouldShow) return null;
+      if (instance.shouldFlattenOptions && this.shouldShow) {
+        return null;
+      }
       if (node.isBranch) {
         const arrowClass = {
           "vue-treeselect__option-arrow": true,
@@ -98,10 +102,11 @@ const Option = {
       // branch nodes. Unless there is no branch nodes at all (a normal
       // non-tree select).
       if (/*node.isLeaf && */ instance.hasBranchNodes) {
-        if (!arrowPlaceholder)
+        if (!arrowPlaceholder) {
           arrowPlaceholder = (
             <div class="vue-treeselect__option-arrow-placeholder">&nbsp;</div>
           );
+        }
 
         return arrowPlaceholder;
       }
@@ -122,8 +127,12 @@ const Option = {
     renderCheckboxContainer(children) {
       const { instance, node } = this;
 
-      if (instance.single) return null;
-      if (instance.disableBranchNodes && node.isBranch) return null;
+      if (instance.single) {
+        return null;
+      }
+      if (instance.disableBranchNodes && node.isBranch) {
+        return null;
+      }
 
       return <div class="vue-treeselect__checkbox-container">{children}</div>;
     },
@@ -140,8 +149,12 @@ const Option = {
         "vue-treeselect__checkbox--disabled": node.isDisabled
       };
 
-      if (!checkMark) checkMark = <span class="vue-treeselect__check-mark" />;
-      if (!minusMark) minusMark = <span class="vue-treeselect__minus-mark" />;
+      if (!checkMark) {
+        checkMark = <span class="vue-treeselect__check-mark" />;
+      }
+      if (!minusMark) {
+        minusMark = <span class="vue-treeselect__minus-mark" />;
+      }
 
       return (
         <span class={checkboxClass}>
@@ -167,7 +180,7 @@ const Option = {
       const countClassName = "vue-treeselect__count";
       const customLabelRenderer = instance.$slots["option-label"];
 
-      if (customLabelRenderer)
+      if (customLabelRenderer) {
         return customLabelRenderer({
           node,
           shouldShowCount,
@@ -175,6 +188,7 @@ const Option = {
           labelClassName,
           countClassName
         });
+      }
       return (
         <label class={labelClassName}>
           {node.label}
@@ -186,7 +200,9 @@ const Option = {
     renderSubOptions() {
       const { node } = this;
 
-      if (!node.childrenStates.isLoaded) return null;
+      if (!node.childrenStates.isLoaded) {
+        return null;
+      }
 
       return node.children.map((childNode) => (
         <vue-treeselect--option node={childNode} key={childNode.id} />
@@ -196,7 +212,9 @@ const Option = {
     renderNoChildrenTip() {
       const { instance, node } = this;
 
-      if (!node.childrenStates.isLoaded || node.children.length) return null;
+      if (!node.childrenStates.isLoaded || node.children.length) {
+        return null;
+      }
 
       return (
         <Tip type="no-children" icon="warning">
@@ -208,7 +226,9 @@ const Option = {
     renderLoadingChildrenTip() {
       const { instance, node } = this;
 
-      if (!node.childrenStates.isLoading) return null;
+      if (!node.childrenStates.isLoading) {
+        return null;
+      }
 
       return (
         <Tip type="loading" icon="loader">
@@ -220,7 +240,9 @@ const Option = {
     renderLoadingChildrenErrorTip() {
       const { instance, node } = this;
 
-      if (!node.childrenStates.loadingError) return null;
+      if (!node.childrenStates.loadingError) {
+        return null;
+      }
 
       return (
         <Tip type="error" icon="error">
@@ -240,7 +262,9 @@ const Option = {
 
       // Equivalent to `self` modifier.
       // istanbul ignore next
-      if (evt.target !== evt.currentTarget) return;
+      if (evt.target !== evt.currentTarget) {
+        return;
+      }
 
       instance.setCurrentHighlightedOption(node, false);
     },

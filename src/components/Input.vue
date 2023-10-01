@@ -46,7 +46,9 @@ export default {
 
     value() {
       // istanbul ignore else
-      if (this.needAutoSize) this.$nextTick(this.updateInputWidth);
+      if (this.needAutoSize) {
+        this.$nextTick(this.updateInputWidth);
+      }
     }
   },
 
@@ -82,7 +84,9 @@ export default {
 
       instance.trigger.isFocused = true;
       // istanbul ignore else
-      if (instance.openOnFocus) instance.openMenu();
+      if (instance.openOnFocus) {
+        instance.openMenu();
+      }
     },
 
     onBlur() {
@@ -120,7 +124,9 @@ export default {
       const key =
         "which" in evt ? evt.which : /* istanbul ignore next */ evt.keyCode;
 
-      if (evt.ctrlKey || evt.shiftKey || evt.altKey || evt.metaKey) return;
+      if (evt.ctrlKey || evt.shiftKey || evt.altKey || evt.metaKey) {
+        return;
+      }
 
       if (
         !instance.menu.isOpen &&
@@ -139,9 +145,16 @@ export default {
         }
         case KEY_CODES.ENTER: {
           evt.preventDefault();
-          if (instance.menu.current === null) return;
+          if (instance.menu.current === null) {
+            return;
+          }
           const current = instance.getNode(instance.menu.current);
-          if ((current.isBranch && instance.disableBranchNodes) || !current.isMatched) return
+          if (
+            (current.isBranch && instance.disableBranchNodes) ||
+            !current.isMatched
+          ) {
+            return;
+          }
           instance.select(current);
           break;
         }
@@ -225,7 +238,9 @@ export default {
 
       if (instance.searchable && !instance.disabled) {
         children.push(this.renderInput());
-        if (this.needAutoSize) children.push(this.renderSizer());
+        if (this.needAutoSize) {
+          children.push(this.renderSizer());
+        }
       }
 
       if (!instance.searchable) {

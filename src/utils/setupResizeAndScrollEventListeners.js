@@ -7,7 +7,9 @@ function findScrollParents($el) {
     $parent.nodeName !== "BODY" &&
     $parent.nodeType === document.ELEMENT_NODE
   ) {
-    if (isScrollElment($parent)) $scrollParents.push($parent);
+    if (isScrollElment($parent)) {
+      $scrollParents.push($parent);
+    }
     $parent = $parent.parentNode;
   }
   $scrollParents.push(window);

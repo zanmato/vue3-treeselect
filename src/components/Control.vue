@@ -33,7 +33,9 @@ export default {
     shouldShowArrow() {
       const { instance } = this;
 
-      if (!instance.alwaysOpen) return true;
+      if (!instance.alwaysOpen) {
+        return true;
+      }
       // Even with `alwaysOpen: true`, sometimes the menu is still closed,
       // e.g. when the control is disabled.
       return !instance.menu.isOpen;
@@ -61,7 +63,9 @@ export default {
         ? instance.clearAllText
         : instance.clearValueText;
 
-      if (!this.shouldShowX) return null;
+      if (!this.shouldShowX) {
+        return null;
+      }
 
       return (
         <div
@@ -80,7 +84,9 @@ export default {
         "vue-treeselect__control-arrow--rotated": instance.menu.isOpen
       };
 
-      if (!this.shouldShowArrow) return null;
+      if (!this.shouldShowArrow) {
+        return null;
+      }
 
       return (
         <div
@@ -107,7 +113,9 @@ export default {
       const { instance } = this;
       const result = instance.beforeClearAll();
       const handler = (shouldClear) => {
-        if (shouldClear) instance.clear();
+        if (shouldClear) {
+          instance.clear();
+        }
       };
 
       if (isPromise(result)) {

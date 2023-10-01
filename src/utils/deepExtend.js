@@ -1,5 +1,7 @@
 function isPlainObject(value) {
-  if (value == null || typeof value !== "object") return false;
+  if (value == null || typeof value !== "object") {
+    return false;
+  }
   return Object.getPrototypeOf(value) === Object.prototype;
 }
 
