@@ -231,11 +231,11 @@
  * Helpers
  */
 
-.vue-treeselect-helper-hide {
+.vue3-treeselect-helper-hide {
   display: none;
 }
 
-.vue-treeselect-helper-zoom-effect-off {
+.vue3-treeselect-helper-zoom-effect-off {
   transform: none !important; // stylelint-disable-line declaration-no-important
 }
 
@@ -244,13 +244,13 @@
  * Animations
  */
 
-@keyframes vue-treeselect-animation-fade-in {
+@keyframes vue3-treeselect-animation-fade-in {
   0% {
     opacity: 0;
   }
 }
 
-@keyframes vue-treeselect-animation-bounce {
+@keyframes vue3-treeselect-animation-bounce {
   0%, 100% {
     transform: scale(0);
   }
@@ -259,7 +259,7 @@
   }
 }
 
-@keyframes vue-treeselect-animation-rotate {
+@keyframes vue3-treeselect-animation-rotate {
   100% {
     transform: rotate(360deg);
   }
@@ -270,7 +270,7 @@
  * Transitions
  */
 
-.vue-treeselect__multi-value-item--transition {
+.vue3-treeselect__multi-value-item--transition {
   &-enter-active,
   &-leave-active {
     transition-duration: @treeselect-transition-duration;
@@ -298,7 +298,7 @@
   }
 }
 
-.vue-treeselect__menu--transition {
+.vue3-treeselect__menu--transition {
   &-enter-active,
   &-leave-active {
     // to be overriden
@@ -310,7 +310,7 @@
   }
 }
 
-.vue-treeselect__list--transition {
+.vue3-treeselect__list--transition {
   &-enter-active,
   &-leave-active {
     // to be overriden
@@ -327,7 +327,7 @@
  * Namespace
  */
 
-.vue-treeselect {
+.vue3-treeselect {
   position: relative;
   text-align: left;
 
@@ -350,7 +350,7 @@
  * Control
  */
 
-.vue-treeselect__control {
+.vue3-treeselect__control {
   .row();
 
   height: @treeselect-control-height;
@@ -361,43 +361,43 @@
   transition-property: border-color, box-shadow, width, height, background-color, opacity;
   transition-timing-function: @ease-out-cubic;
 
-  .vue-treeselect:not(.vue-treeselect--disabled):not(.vue-treeselect--focused) &:hover {
+  .vue3-treeselect:not(.vue3-treeselect--disabled):not(.vue3-treeselect--focused) &:hover {
     border-color: @treeselect-control-border-color-hover;
   }
 
-  .vue-treeselect--focused:not(.vue-treeselect--open) & {
+  .vue3-treeselect--focused:not(.vue3-treeselect--open) & {
     border-color: @treeselect-control-border-color-focus;
     box-shadow: @treeselect-control-box-shadow-focus;
   }
 
-  .vue-treeselect--disabled & {
+  .vue3-treeselect--disabled & {
     background-color: @treeselect-control-bg-disabled;
   }
 
-  .vue-treeselect--open & {
+  .vue3-treeselect--open & {
     border-color: @treeselect-control-border-color-active;
   }
 
-  .vue-treeselect--open.vue-treeselect--open-below & {
+  .vue3-treeselect--open.vue3-treeselect--open-below & {
     .border-radius-bottom(0);
   }
 
-  .vue-treeselect--open.vue-treeselect--open-above & {
+  .vue3-treeselect--open.vue3-treeselect--open-above & {
     .border-radius-top(0);
   }
 }
 
-.vue-treeselect__value-container,
-.vue-treeselect__multi-value {
+.vue3-treeselect__value-container,
+.vue3-treeselect__multi-value {
   width: 100%;
   vertical-align: middle;
 }
 
-.vue-treeselect__value-container {
+.vue3-treeselect__value-container {
   display: table-cell;
   position: relative;
 
-  .vue-treeselect--searchable:not(.vue-treeselect--disabled) & {
+  .vue3-treeselect--searchable:not(.vue3-treeselect--disabled) & {
     // The real input is small and not covering the whole control.
     // We show an I-shape cursor to give user a hint that
     // clicking anywhere in the control will make the input focused.
@@ -405,16 +405,16 @@
   }
 }
 
-.vue-treeselect__multi-value {
+.vue3-treeselect__multi-value {
   display: inline-block;
 
-  .vue-treeselect--has-value & {
+  .vue3-treeselect--has-value & {
     margin-bottom: @treeselect-padding;
   }
 }
 
-.vue-treeselect__placeholder,
-.vue-treeselect__single-value {
+.vue3-treeselect__placeholder,
+.vue3-treeselect__single-value {
   .text-truncate();
   .horizontal-padding(@treeselect-padding);
 
@@ -428,24 +428,24 @@
   pointer-events: none;
 }
 
-.vue-treeselect__placeholder {
+.vue3-treeselect__placeholder {
   color: @treeselect-placeholder-font-color;
 }
 
-.vue-treeselect__single-value {
+.vue3-treeselect__single-value {
   color: @treeselect-single-value-font-color;
 
-  .vue-treeselect--focused.vue-treeselect--searchable & {
+  .vue3-treeselect--focused.vue3-treeselect--searchable & {
     color: @treeselect-single-value-font-color-focused;
   }
 
-  .vue-treeselect--disabled & {
+  .vue3-treeselect--disabled & {
     // #274 Fix for IE
     position: static;
   }
 }
 
-.vue-treeselect__multi-value-item-container {
+.vue3-treeselect__multi-value-item-container {
   display: inline-block;
   padding-top: @treeselect-padding;
   padding-right: @treeselect-padding;
@@ -457,7 +457,7 @@
   }
 }
 
-.vue-treeselect__multi-value-item {
+.vue3-treeselect__multi-value-item {
   .clickable();
 
   display: inline-table;
@@ -470,21 +470,21 @@
   font-size: @treeselect-multi-value-font-size;
   vertical-align: top; // stylelint-disable-line plugin/declaration-block-no-ignored-properties
 
-  .vue-treeselect:not(.vue-treeselect--disabled) &:not(.vue-treeselect__multi-value-item-disabled):hover &:not(.vue-treeselect__multi-value-item-new) &:not(.vue-treeselect__multi-value-item-new):hover {
+  .vue3-treeselect:not(.vue3-treeselect--disabled) &:not(.vue3-treeselect__multi-value-item-disabled):hover &:not(.vue3-treeselect__multi-value-item-new) &:not(.vue3-treeselect__multi-value-item-new):hover {
     .clickable();
 
     background: @treeselect-multi-value-item-bg-hover;
     color: @treeselect-multi-value-font-color-hover;
   }
 
-  &.vue-treeselect__multi-value-item-disabled {
+  &.vue3-treeselect__multi-value-item-disabled {
     .reset-cursor();
 
     background: @treeselect-multi-value-item-bg-disabled;
     color: @treeselect-multi-value-font-color-disabled;
   }
 
-  .vue-treeselect--disabled & {
+  .vue3-treeselect--disabled & {
     .reset-cursor();
 
     background: @treeselect-multi-value-item-bg-control-disabled;
@@ -492,7 +492,7 @@
     color: @treeselect-multi-value-item-font-color-control-disabled;
   }
 
-  &.vue-treeselect__multi-value-item-new {
+  &.vue3-treeselect__multi-value-item-new {
     background: @treeselect-multi-value-item-bg-new;
     &:hover {
       background: @treeselect-multi-value-item-bg-new;
@@ -500,14 +500,14 @@
   }
 }
 
-.vue-treeselect__value-remove,
-.vue-treeselect__multi-value-label {
+.vue3-treeselect__value-remove,
+.vue3-treeselect__multi-value-label {
   display: table-cell;
   padding: @treeselect-multi-value-padding-y @treeselect-multi-value-padding-x;
   vertical-align: middle;
 }
 
-.vue-treeselect__value-remove {
+.vue3-treeselect__value-remove {
   color: @treeselect-multi-value-remove-color;
   padding-left: @treeselect-multi-value-padding-x;
   border-left: 1px solid @treeselect-multi-value-divider-color;
@@ -518,12 +518,12 @@
     border-right: 1px solid @treeselect-multi-value-divider-color;
   }
 
-  .vue-treeselect__multi-value-item:hover & {
+  .vue3-treeselect__multi-value-item:hover & {
     color: @treeselect-multi-value-remove-color-hover;
   }
 
-  .vue-treeselect--disabled &,
-  .vue-treeselect__multi-value-item-disabled & {
+  .vue3-treeselect--disabled &,
+  .vue3-treeselect__multi-value-item-disabled & {
     display: none;
   }
 
@@ -533,13 +533,13 @@
   }
 }
 
-.vue-treeselect__multi-value-label {
+.vue3-treeselect__multi-value-label {
   padding-right: @treeselect-multi-value-padding-x;
   white-space: pre-line;
   user-select: none;
 }
 
-.vue-treeselect__limit-tip {
+.vue3-treeselect__limit-tip {
   display: inline-block;
   padding-top: @treeselect-padding;
   padding-right: @treeselect-padding;
@@ -551,7 +551,7 @@
   }
 }
 
-.vue-treeselect__limit-tip-text {
+.vue3-treeselect__limit-tip-text {
   .reset-cursor();
 
   display: block;
@@ -562,27 +562,27 @@
   font-weight: @treeselect-limit-tip-font-weight;
 }
 
-.vue-treeselect__input-container {
+.vue3-treeselect__input-container {
   display: block;
   max-width: 100%;
   outline: none;
 
-  .vue-treeselect--single & {
+  .vue3-treeselect--single & {
     font-size: @treeselect-single-input-font-size;
     height: 100%;
   }
 
-  .vue-treeselect--multi & {
+  .vue3-treeselect--multi & {
     display: inline-block;
     font-size: @treeselect-multi-input-font-size;
     vertical-align: top;
   }
 
-  .vue-treeselect--searchable & {
+  .vue3-treeselect--searchable & {
     .horizontal-padding(@treeselect-padding);
   }
 
-  .vue-treeselect--searchable.vue-treeselect--multi.vue-treeselect--has-value & {
+  .vue3-treeselect--searchable.vue3-treeselect--multi.vue3-treeselect--has-value & {
     padding-top: @treeselect-padding;
     padding-left: 0;
 
@@ -592,20 +592,20 @@
     }
   }
 
-  .vue-treeselect--disabled & {
+  .vue3-treeselect--disabled & {
     display: none;
   }
 }
 
-.vue-treeselect__input,
-.vue-treeselect__sizer {
+.vue3-treeselect__input,
+.vue3-treeselect__sizer {
   margin: 0;
   line-height: inherit;
   font-family: inherit;
   font-size: inherit;
 }
 
-.vue-treeselect__input {
+.vue3-treeselect__input {
   max-width: 100%;
   margin: 0;
   padding: 0;
@@ -621,22 +621,22 @@
     display: none;
   }
 
-  .vue-treeselect--single & {
+  .vue3-treeselect--single & {
     width: 100%;
     height: 100%;
   }
 
-  .vue-treeselect--multi & {
+  .vue3-treeselect--multi & {
     .vertical-padding(@treeselect-multi-value-margin-y + @treeselect-multi-value-item-border-width);
   }
 
-  .vue-treeselect--has-value & {
+  .vue3-treeselect--has-value & {
     line-height: inherit;
     vertical-align: top;
   }
 }
 
-.vue-treeselect__sizer {
+.vue3-treeselect__sizer {
   position: absolute;
   top: 0;
   left: 0;
@@ -646,47 +646,47 @@
   white-space: pre;
 }
 
-.vue-treeselect__x-container {
+.vue3-treeselect__x-container {
   .narrow-cell();
   .clickable();
 
   color: @treeselect-x-color;
-  animation: @treeselect-transition-duration vue-treeselect-animation-fade-in @ease-out-circ;
+  animation: @treeselect-transition-duration vue3-treeselect-animation-fade-in @ease-out-circ;
 
   &:hover {
     color: @treeselect-x-color-hover;
   }
 }
 
-.vue-treeselect__x {
+.vue3-treeselect__x {
   width: @treeselect-x-size;
   height: @treeselect-x-size;
 }
 
-.vue-treeselect__control-arrow-container {
+.vue3-treeselect__control-arrow-container {
   .narrow-cell();
   .clickable();
 
-  .vue-treeselect--disabled & {
+  .vue3-treeselect--disabled & {
     .reset-cursor();
   }
 }
 
-.vue-treeselect__control-arrow {
+.vue3-treeselect__control-arrow {
   width: @treeselect-arrow-size;
   height: @treeselect-arrow-size;
   color: @treeselect-arrow-color;
 
-  .vue-treeselect:not(.vue-treeselect--disabled) .vue-treeselect__control-arrow-container:hover & {
+  .vue3-treeselect:not(.vue3-treeselect--disabled) .vue3-treeselect__control-arrow-container:hover & {
     color: @treeselect-arrow-color-hover;
   }
 
-  .vue-treeselect--disabled & {
+  .vue3-treeselect--disabled & {
     opacity: 0.35;
   }
 }
 
-.vue-treeselect__control-arrow--rotated {
+.vue3-treeselect__control-arrow--rotated {
   transform: rotateZ(180deg);
 }
 
@@ -695,23 +695,23 @@
  * Menu
  */
 
-.vue-treeselect__menu-container {
+.vue3-treeselect__menu-container {
   position: absolute;
   left: 0;
   width: 100%;
   overflow: visible;
   transition: 0s;
 
-  .vue-treeselect--open-below:not(.vue-treeselect--append-to-body) & {
+  .vue3-treeselect--open-below:not(.vue3-treeselect--append-to-body) & {
     top: 100%;
   }
 
-  .vue-treeselect--open-above:not(.vue-treeselect--append-to-body) & {
+  .vue3-treeselect--open-above:not(.vue3-treeselect--append-to-body) & {
     bottom: 100%;
   }
 }
 
-.vue-treeselect__menu {
+.vue3-treeselect__menu {
   .reset-cursor(); // set to normal cursor since text is unselectable
   .vertical-padding(@treeselect-menu-padding-y);
 
@@ -727,7 +727,7 @@
   // https://css-tricks.com/snippets/css/momentum-scrolling-on-ios-overflow-elements/
   -webkit-overflow-scrolling: touch;
 
-  .vue-treeselect--open-below & {
+  .vue3-treeselect--open-below & {
     .border-radius-bottom(@treeselect-border-radius-lg);
 
     top: 0;
@@ -736,7 +736,7 @@
     box-shadow: @treeselect-menu-box-shadow;
   }
 
-  .vue-treeselect--open-above & {
+  .vue3-treeselect--open-above & {
     .border-radius-top(@treeselect-border-radius-lg);
 
     bottom: 0;
@@ -748,8 +748,8 @@
 .generate-level-indentations(@i) when (@i >= 0) {
   .generate-level-indentations((@i - 1));
 
-  .vue-treeselect__indent-level-@{i} {
-    .vue-treeselect__option {
+  .vue3-treeselect__indent-level-@{i} {
+    .vue3-treeselect__option {
       padding-left: @treeselect-padding + @i * @treeselect-narrow-cell-width;
 
       [dir="rtl"] & {
@@ -758,7 +758,7 @@
       }
     }
 
-    .vue-treeselect__tip {
+    .vue3-treeselect__tip {
       padding-left: @treeselect-padding + (@i + 1) * @treeselect-narrow-cell-width;
 
       [dir="rtl"] & {
@@ -770,17 +770,17 @@
 }
 .generate-level-indentations(@treeselect-max-level);
 
-.vue-treeselect__option {
+.vue3-treeselect__option {
   .row();
 }
 
-.vue-treeselect__option--highlight {
+.vue3-treeselect__option--highlight {
   background: @treeselect-option-bg-highlight;
 }
 
-.vue-treeselect__option--selected {
-  // note that these should override `.vue-treeselect__option--highlight`
-  .vue-treeselect--single & {
+.vue3-treeselect__option--selected {
+  // note that these should override `.vue3-treeselect__option--highlight`
+  .vue3-treeselect--single & {
     background: @treeselect-option-selected-bg;
     font-weight: 600;
 
@@ -790,20 +790,20 @@
   }
 }
 
-.vue-treeselect__option--hide {
+.vue3-treeselect__option--hide {
   display: none;
 }
 
-.vue-treeselect__option-arrow-container,
-.vue-treeselect__option-arrow-placeholder {
+.vue3-treeselect__option-arrow-container,
+.vue3-treeselect__option-arrow-placeholder {
   .narrow-cell();
 }
 
-.vue-treeselect__option-arrow-container {
+.vue3-treeselect__option-arrow-container {
   .clickable();
 }
 
-.vue-treeselect__option-arrow {
+.vue3-treeselect__option-arrow {
   display: inline-block;
   width: @treeselect-arrow-size;
   height: @treeselect-arrow-size;
@@ -816,20 +816,20 @@
     transform: rotateZ(90deg);
   }
 
-  .vue-treeselect__option-arrow-container:hover &,
-  .vue-treeselect--branch-nodes-disabled .vue-treeselect__option:hover & {
+  .vue3-treeselect__option-arrow-container:hover &,
+  .vue3-treeselect--branch-nodes-disabled .vue3-treeselect__option:hover & {
     color: @treeselect-arrow-color-hover;
   }
 }
 
-.vue-treeselect__option-arrow--rotated {
+.vue3-treeselect__option-arrow--rotated {
   transform: rotateZ(0);
 
   [dir="rtl"] & {
     transform: rotateZ(0);
   }
 
-  &.vue-treeselect__option-arrow--prepare-enter {
+  &.vue3-treeselect__option-arrow--prepare-enter {
     transform: rotateZ(-90deg) !important; // stylelint-disable-line declaration-no-important
 
     [dir="rtl"] & {
@@ -838,7 +838,7 @@
   }
 }
 
-.vue-treeselect__label-container {
+.vue3-treeselect__label-container {
   .cell();
   .clickable();
 
@@ -847,14 +847,14 @@
   table-layout: fixed;
   color: @treeselect-option-label-color;
 
-  .vue-treeselect__option--disabled & {
+  .vue3-treeselect__option--disabled & {
     .forbidden();
 
     color: @treeselect-option-label-color-disabled;
   }
 }
 
-.vue-treeselect__checkbox-container {
+.vue3-treeselect__checkbox-container {
   display: table-cell;
   width: @treeselect-narrow-cell-width;
   min-width: @treeselect-narrow-cell-width;
@@ -863,7 +863,7 @@
   vertical-align: middle;
 }
 
-.vue-treeselect__checkbox {
+.vue3-treeselect__checkbox {
   display: block;
   margin: auto;
   width: @treeselect-checkbox-size;
@@ -875,8 +875,8 @@
   transition: @treeselect-transition-duration all @ease-out-circ;
 }
 
-.vue-treeselect__check-mark,
-.vue-treeselect__minus-mark {
+.vue3-treeselect__check-mark,
+.vue3-treeselect__minus-mark {
   display: block;
   position: absolute;
   left: 1px;
@@ -886,7 +886,7 @@
   transition: @treeselect-transition-duration all ease;
 }
 
-.vue-treeselect__minus-mark {
+.vue3-treeselect__minus-mark {
   width: image-width(@treeselect-checkbox-indeterminate-icon);
   height: image-height(@treeselect-checkbox-indeterminate-icon);
   // Svg icons are rendered differently in different browsers thus unacceptable.
@@ -895,16 +895,16 @@
   .retina(@treeselect-checkbox-indeterminate-icon, 3);
   background-size: image-size(@treeselect-checkbox-indeterminate-icon);
 
-  .vue-treeselect__checkbox--indeterminate > & {
+  .vue3-treeselect__checkbox--indeterminate > & {
     opacity: 1;
   }
 
-  .vue-treeselect__checkbox--disabled & {
+  .vue3-treeselect__checkbox--disabled & {
     .retina(@treeselect-checkbox-disabled-indeterminate-icon, 3);
   }
 }
 
-.vue-treeselect__check-mark {
+.vue3-treeselect__check-mark {
   width: image-width(@treeselect-checkbox-checked-icon);
   height: image-height(@treeselect-checkbox-checked-icon);
   .retina(@treeselect-checkbox-checked-icon, 3);
@@ -912,58 +912,58 @@
   // Set initial height to 1px.
   transform: scaleY(1 / unit(image-height(@treeselect-checkbox-checked-icon)));
 
-  .vue-treeselect__checkbox--checked > & {
+  .vue3-treeselect__checkbox--checked > & {
     opacity: 1;
     transform: scaleY(1);
   }
 
-  .vue-treeselect__checkbox--disabled & {
+  .vue3-treeselect__checkbox--disabled & {
     .retina(@treeselect-checkbox-disabled-checked-icon, 3);
   }
 }
 
-.vue-treeselect__checkbox--unchecked {
+.vue3-treeselect__checkbox--unchecked {
   border-color: @treeselect-checkbox-border-color;
   background: @treeselect-checkbox-bg;
 
-  .vue-treeselect__label-container:hover & {
+  .vue3-treeselect__label-container:hover & {
     border-color: @treeselect-checkbox-border-color-hover;
     background: @treeselect-checkbox-bg-hover;
   }
 }
 
-.vue-treeselect__checkbox--indeterminate {
+.vue3-treeselect__checkbox--indeterminate {
   border-color: @treeselect-checkbox-indeterminate-border-color;
   background: @treeselect-checkbox-indeterminate-bg;
 
-  .vue-treeselect__label-container:hover & {
+  .vue3-treeselect__label-container:hover & {
     border-color: @treeselect-checkbox-indeterminate-border-color-hover;
     background: @treeselect-checkbox-indeterminate-bg-hover;
   }
 }
 
-.vue-treeselect__checkbox--checked {
+.vue3-treeselect__checkbox--checked {
   border-color: @treeselect-checkbox-checked-border-color;
   background: @treeselect-checkbox-checked-bg;
 
-  .vue-treeselect__label-container:hover & {
+  .vue3-treeselect__label-container:hover & {
     border-color: @treeselect-checkbox-checked-border-color-hover;
     background: @treeselect-checkbox-checked-bg-hover;
   }
 }
 
-.vue-treeselect__checkbox--disabled {
+.vue3-treeselect__checkbox--disabled {
   border-color: @treeselect-checkbox-disabled-border-color;
   background-color: @treeselect-checkbox-disabled-bg-color;
 
-  .vue-treeselect__label-container:hover & {
+  .vue3-treeselect__label-container:hover & {
     border-color: @treeselect-checkbox-disabled-border-color;
     background-color: @treeselect-checkbox-disabled-bg-color;
   }
 }
 
 
-.vue-treeselect__label {
+.vue3-treeselect__label {
   .text-truncate();
 
   display: table-cell;
@@ -978,7 +978,7 @@
   }
 }
 
-.vue-treeselect__count {
+.vue3-treeselect__count {
   margin-left: @treeselect-padding;
   font-weight: 400;
   opacity: 0.6;
@@ -989,20 +989,20 @@
   }
 }
 
-.vue-treeselect__tip {
+.vue3-treeselect__tip {
   .row();
 
   color: @treeselect-tip-color;
 }
 
-.vue-treeselect__tip-text {
+.vue3-treeselect__tip-text {
   .wide-cell();
 
   font-size: @treeselect-tip-font-size;
 }
 
-.vue-treeselect__retry {
-  .vue-treeselect__error-tip & {
+.vue3-treeselect__retry {
+  .vue3-treeselect__error-tip & {
     .clickable();
 
     margin-left: @treeselect-padding;
@@ -1018,10 +1018,10 @@
   }
 }
 
-.vue-treeselect__icon-container {
+.vue3-treeselect__icon-container {
   .narrow-cell();
 
-  .vue-treeselect--single & {
+  .vue3-treeselect--single & {
     padding-left: @treeselect-padding;
 
     [dir="rtl"] & {
@@ -1031,7 +1031,7 @@
   }
 }
 
-.vue-treeselect__icon-warning {
+.vue3-treeselect__icon-warning {
   .icon();
   .rounded();
 
@@ -1054,7 +1054,7 @@
   }
 }
 
-.vue-treeselect__icon-error {
+.vue3-treeselect__icon-error {
   .icon();
   .rounded();
 
@@ -1089,14 +1089,14 @@
   }
 }
 
-.vue-treeselect__icon-loader {
+.vue3-treeselect__icon-loader {
   .icon();
 
   position: relative;
   width: @treeselect-icon-size;
   height: @treeselect-icon-size;
   text-align: center;
-  animation: @treeselect-loader-animation-duration vue-treeselect-animation-rotate linear infinite;
+  animation: @treeselect-loader-animation-duration vue3-treeselect-animation-rotate linear infinite;
 
   &::before,
   &::after {
@@ -1110,7 +1110,7 @@
     width: 100%;
     height: 100%;
     opacity: 0.6;
-    animation: @treeselect-loader-animation-duration vue-treeselect-animation-bounce ease-in-out infinite;
+    animation: @treeselect-loader-animation-duration vue3-treeselect-animation-bounce ease-in-out infinite;
   }
 
   &::before {
@@ -1128,11 +1128,11 @@
  * Menu Portal
  */
 
-.vue-treeselect__menu-placeholder {
+.vue3-treeselect__menu-placeholder {
   display: none;
 }
 
-.vue-treeselect__portal-target {
+.vue3-treeselect__portal-target {
   position: absolute;
   display: block;
   left: 0;

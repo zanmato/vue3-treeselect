@@ -7,6 +7,6 @@
 
 <script>
 export default {
-  name: "vue-treeselect--x"
+  name: "vue3-treeselect--x"
 };
 </script>

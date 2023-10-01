@@ -303,7 +303,7 @@ export default {
           `${code("searchQuery")} - only presents when searching async options`,
           `${code("instanceId")} - eqauls to the value of ${code(
             "instanceId"
-          )} prop you passed to vue-treeselect`
+          )} prop you passed to vue3-treeselect`
         ].join("<br>")
       },
       {
@@ -366,7 +366,7 @@ export default {
         defaultValue: code('"auto"'),
         description: `By default (${code(
           '"auto"'
-        )}), the menu will open below the control. If there is not enough space, vue-treeselect will automatically flip the menu. You can use one of other four options to force the menu to be always opened to specified direction. <br>Acceptable values: ${code(
+        )}), the menu will open below the control. If there is not enough space, vue3-treeselect will automatically flip the menu. You can use one of other four options to force the menu to be always opened to specified direction. <br>Acceptable values: ${code(
           '"auto"'
         )}, ${code('"below"')}, ${code('"bottom"')}, ${code(
           '"above"'

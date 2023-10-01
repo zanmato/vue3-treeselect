@@ -3,7 +3,7 @@ import Input from "./Input.vue";
 import Placeholder from "./Placeholder.vue";
 
 export default {
-  name: "vue-treeselect--single-value",
+  name: "vue3-treeselect--single-value",
   inject: ["instance"],
   methods: {
     renderSingleValueLabel() {
@@ -25,7 +25,7 @@ export default {
 
     return renderValueContainer([
       shouldShowValue && (
-        <div class="vue-treeselect__single-value">
+        <div class="vue3-treeselect__single-value">
           {this.renderSingleValueLabel()}
         </div>
       ),

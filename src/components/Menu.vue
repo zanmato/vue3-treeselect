@@ -13,7 +13,7 @@ const directionMap = {
 };
 
 export default {
-  name: "vue-treeselect--menu",
+  name: "vue3-treeselect--menu",
   inject: ["instance"],
 
   computed: {
@@ -73,7 +73,7 @@ export default {
       return (
         <div
           ref="menu"
-          class="vue-treeselect__menu"
+          class="vue3-treeselect__menu"
           onMousedown={instance.handleMouseDown}
           style={this.menuStyle}
           key={instance.menu.renderKey}>
@@ -164,7 +164,7 @@ export default {
       const { instance } = this;
 
       return (
-        <div class="vue-treeselect__list">
+        <div class="vue3-treeselect__list">
           {instance.forest.normalizedOptions.map((rootNode) => (
             <Option node={rootNode} key={rootNode.id} />
           ))}
@@ -199,7 +199,7 @@ export default {
         <Tip type="error" icon="error">
           {instance.rootOptionsStates.loadingError}
           <a
-            class="vue-treeselect__retry"
+            class="vue3-treeselect__retry"
             onClick={instance.loadRootOptions}
             title={instance.retryTitle}>
             {instance.retryText}
@@ -218,7 +218,7 @@ export default {
         <Tip type="error" icon="error">
           {entry.loadingError}
           <a
-            class="vue-treeselect__retry"
+            class="vue3-treeselect__retry"
             onClick={instance.handleRemoteSearch}
             title={instance.retryTitle}>
             {instance.retryText}
@@ -342,9 +342,9 @@ export default {
     return (
       <div
         ref="menu-container"
-        class="vue-treeselect__menu-container"
+        class="vue3-treeselect__menu-container"
         style={this.menuContainerStyle}>
-        <Transition name="vue-treeselect__menu--transition">
+        <Transition name="vue3-treeselect__menu--transition">
           {this.renderMenu()}
         </Transition>
       </div>

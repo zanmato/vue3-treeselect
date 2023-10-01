@@ -6,7 +6,7 @@ import DeleteIcon from "./icons/Delete.vue";
 import ArrowIcon from "./icons/Arrow.vue";
 
 export default {
-  name: "vue-treeselect--control",
+  name: "vue3-treeselect--control",
   inject: ["instance"],
 
   computed: {
@@ -69,10 +69,10 @@ export default {
 
       return (
         <div
-          class="vue-treeselect__x-container"
+          class="vue3-treeselect__x-container"
           title={title}
           onMousedown={this.handleMouseDownOnX}>
-          <DeleteIcon class="vue-treeselect__x" />
+          <DeleteIcon class="vue3-treeselect__x" />
         </div>
       );
     },
@@ -80,8 +80,8 @@ export default {
     renderArrow() {
       const { instance } = this;
       const arrowClass = {
-        "vue-treeselect__control-arrow": true,
-        "vue-treeselect__control-arrow--rotated": instance.menu.isOpen
+        "vue3-treeselect__control-arrow": true,
+        "vue3-treeselect__control-arrow--rotated": instance.menu.isOpen
       };
 
       if (!this.shouldShowArrow) {
@@ -90,7 +90,7 @@ export default {
 
       return (
         <div
-          class="vue-treeselect__control-arrow-container"
+          class="vue3-treeselect__control-arrow-container"
           onMousedown={this.handleMouseDownOnArrow}>
           <ArrowIcon class={arrowClass} />
         </div>
@@ -144,7 +144,7 @@ export default {
 
     // This is meant to be called by child `<Value />` component.
     renderValueContainer(children) {
-      return <div class="vue-treeselect__value-container">{children}</div>;
+      return <div class="vue3-treeselect__value-container">{children}</div>;
     }
   },
 
@@ -154,7 +154,7 @@ export default {
 
     return (
       <div
-        class="vue-treeselect__control"
+        class="vue3-treeselect__control"
         onMousedown={instance.handleMouseDown}>
         <ValueContainer ref="value-container" />
         {this.renderX()}

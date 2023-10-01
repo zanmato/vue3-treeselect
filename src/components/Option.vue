@@ -8,7 +8,7 @@ import ArrowIcon from "./icons/Arrow.vue";
 let arrowPlaceholder, checkMark, minusMark;
 
 const Option = {
-  name: "vue-treeselect--option",
+  name: "vue3-treeselect--option",
   inject: ["instance"],
 
   props: {
@@ -35,13 +35,13 @@ const Option = {
     renderOption() {
       const { instance, node } = this;
       const optionClass = {
-        "vue-treeselect__option": true,
-        "vue-treeselect__option--disabled": node.isDisabled,
-        "vue-treeselect__option--selected": instance.isSelected(node),
-        "vue-treeselect__option--highlight": node.isHighlighted,
-        "vue-treeselect__option--matched":
+        "vue3-treeselect__option": true,
+        "vue3-treeselect__option--disabled": node.isDisabled,
+        "vue3-treeselect__option--selected": instance.isSelected(node),
+        "vue3-treeselect__option--highlight": node.isHighlighted,
+        "vue3-treeselect__option--matched":
           instance.localSearch.active && node.isMatched,
-        "vue-treeselect__option--hide": !this.shouldShow
+        "vue3-treeselect__option--hide": !this.shouldShow
       };
 
       return (
@@ -64,7 +64,7 @@ const Option = {
       }
 
       return (
-        <div class="vue-treeselect__list">
+        <div class="vue3-treeselect__list">
           {this.renderSubOptions()}
           {this.renderNoChildrenTip()}
           {this.renderLoadingChildrenTip()}
@@ -81,16 +81,16 @@ const Option = {
       }
       if (node.isBranch) {
         const arrowClass = {
-          "vue-treeselect__option-arrow": true,
-          "vue-treeselect__option-arrow--rotated": this.shouldExpand
+          "vue3-treeselect__option-arrow": true,
+          "vue3-treeselect__option-arrow--rotated": this.shouldExpand
         };
 
         return (
           <div
-            class="vue-treeselect__option-arrow-container"
+            class="vue3-treeselect__option-arrow-container"
             onMousedown={this.handleMouseDownOnArrow}>
             <Transition
-              name="vue-treeselect__option-arrow--prepare"
+              name="vue3-treeselect__option-arrow--prepare"
               appear={true}>
               <ArrowIcon class={arrowClass} />
             </Transition>
@@ -104,7 +104,7 @@ const Option = {
       if (/*node.isLeaf && */ instance.hasBranchNodes) {
         if (!arrowPlaceholder) {
           arrowPlaceholder = (
-            <div class="vue-treeselect__option-arrow-placeholder">&nbsp;</div>
+            <div class="vue3-treeselect__option-arrow-placeholder">&nbsp;</div>
           );
         }
 
@@ -117,7 +117,7 @@ const Option = {
     renderLabelContainer(children) {
       return (
         <div
-          class="vue-treeselect__label-container"
+          class="vue3-treeselect__label-container"
           onMousedown={this.handleMouseDownOnLabelContainer}>
           {children}
         </div>
@@ -134,26 +134,26 @@ const Option = {
         return null;
       }
 
-      return <div class="vue-treeselect__checkbox-container">{children}</div>;
+      return <div class="vue3-treeselect__checkbox-container">{children}</div>;
     },
 
     renderCheckbox() {
       const { instance, node } = this;
       const checkedState = instance.forest.checkedStateMap[node.id];
       const checkboxClass = {
-        "vue-treeselect__checkbox": true,
-        "vue-treeselect__checkbox--checked": checkedState === CHECKED,
-        "vue-treeselect__checkbox--indeterminate":
+        "vue3-treeselect__checkbox": true,
+        "vue3-treeselect__checkbox--checked": checkedState === CHECKED,
+        "vue3-treeselect__checkbox--indeterminate":
           checkedState === INDETERMINATE,
-        "vue-treeselect__checkbox--unchecked": checkedState === UNCHECKED,
-        "vue-treeselect__checkbox--disabled": node.isDisabled
+        "vue3-treeselect__checkbox--unchecked": checkedState === UNCHECKED,
+        "vue3-treeselect__checkbox--disabled": node.isDisabled
       };
 
       if (!checkMark) {
-        checkMark = <span class="vue-treeselect__check-mark" />;
+        checkMark = <span class="vue3-treeselect__check-mark" />;
       }
       if (!minusMark) {
-        minusMark = <span class="vue-treeselect__minus-mark" />;
+        minusMark = <span class="vue3-treeselect__minus-mark" />;
       }
 
       return (
@@ -176,8 +176,8 @@ const Option = {
           ? instance.localSearch.countMap[node.id][instance.showCountOf]
           : node.count[instance.showCountOf]
         : NaN;
-      const labelClassName = "vue-treeselect__label";
-      const countClassName = "vue-treeselect__count";
+      const labelClassName = "vue3-treeselect__label";
+      const countClassName = "vue3-treeselect__count";
       const customLabelRenderer = instance.$slots["option-label"];
 
       if (customLabelRenderer) {
@@ -205,7 +205,7 @@ const Option = {
       }
 
       return node.children.map((childNode) => (
-        <vue-treeselect--option node={childNode} key={childNode.id} />
+        <vue3-treeselect--option node={childNode} key={childNode.id} />
       ));
     },
 
@@ -248,7 +248,7 @@ const Option = {
         <Tip type="error" icon="error">
           {node.childrenStates.loadingError}
           <a
-            class="vue-treeselect__retry"
+            class="vue3-treeselect__retry"
             title={instance.retryTitle}
             onMousedown={this.handleMouseDownOnRetry}>
             {instance.retryText}
@@ -298,15 +298,15 @@ const Option = {
     const { node } = this;
     const indentLevel = this.instance.shouldFlattenOptions ? 0 : node.level;
     const listItemClass = {
-      "vue-treeselect__list-item": true,
-      [`vue-treeselect__indent-level-${indentLevel}`]: true
+      "vue3-treeselect__list-item": true,
+      [`vue3-treeselect__indent-level-${indentLevel}`]: true
     };
 
     return (
       <div class={listItemClass}>
         {this.renderOption()}
         {node.isBranch ? (
-          <Transition name="vue-treeselect__list--transition">
+          <Transition name="vue3-treeselect__list--transition">
             {this.renderSubOptionsList()}
           </Transition>
         ) : (

@@ -17,7 +17,7 @@ const keysThatRequireMenuBeingOpen = [
 ];
 
 export default {
-  name: "vue-treeselect--input",
+  name: "vue3-treeselect--input",
   inject: ["instance"],
 
   data: () => ({
@@ -263,7 +263,7 @@ export default {
       }
 
       return (
-        <div class="vue-treeselect__input-container" {...props}>
+        <div class="vue3-treeselect__input-container" {...props}>
           {children}
         </div>
       );
@@ -275,7 +275,7 @@ export default {
       return (
         <input
           ref="input"
-          class="vue-treeselect__input"
+          class="vue3-treeselect__input"
           type="text"
           autocomplete="off"
           tabIndex={instance.tabIndex}
@@ -293,7 +293,7 @@ export default {
 
     renderSizer() {
       return (
-        <div ref="sizer" class="vue-treeselect__sizer">
+        <div ref="sizer" class="vue3-treeselect__sizer">
           {this.value}
         </div>
       );

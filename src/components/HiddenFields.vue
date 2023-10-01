@@ -15,7 +15,7 @@ function stringifyValue(value) {
 }
 
 export default defineComponent({
-  name: "vue-treeselect--hidden-fields",
+  name: "vue3-treeselect--hidden-fields",
   functional: true,
   inject: ["instance"],
 

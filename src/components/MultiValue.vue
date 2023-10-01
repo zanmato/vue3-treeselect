@@ -5,7 +5,7 @@ import Input from "./Input.vue";
 import Placeholder from "./Placeholder.vue";
 
 export default {
-  name: "vue-treeselect--multi-value",
+  name: "vue3-treeselect--multi-value",
   inject: ["instance"],
 
   methods: {
@@ -30,9 +30,9 @@ export default {
 
       return (
         <div
-          class="vue-treeselect__limit-tip vue-treeselect-helper-zoom-effect-off"
+          class="vue3-treeselect__limit-tip vue3-treeselect-helper-zoom-effect-off"
           key="exceed-limit-tip">
-          <span class="vue-treeselect__limit-tip-text">
+          <span class="vue3-treeselect__limit-tip-text">
             {instance.limitText(count)}
           </span>
         </div>
@@ -45,16 +45,16 @@ export default {
     // const transitionGroupProps = {
     //   props: {
     //     tag: 'div',
-    //     name: 'vue-treeselect__multi-value-item--transition',
+    //     name: 'vue3-treeselect__multi-value-item--transition',
     //     appear: true,
     //   },
     // }
 
     return renderValueContainer(
       <TransitionGroup
-        class="vue-treeselect__multi-value"
+        class="vue3-treeselect__multi-value"
         tag="div"
-        name="vue-treeselect__multi-value-item--transition"
+        name="vue3-treeselect__multi-value-item--transition"
         appear={true}>
         {this.renderMultiValueItems()}
         {this.renderExceedLimitTip()}

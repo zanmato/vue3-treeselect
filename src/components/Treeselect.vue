@@ -16,7 +16,7 @@ import MenuPortal from "./MenuPortal.vue";
 
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "vue-treeselect",
+  name: "vue3-treeselect",
   components: {
     HiddenFields,
     Control,
@@ -28,18 +28,18 @@ export default defineComponent({
   computed: {
     wrapperClass() {
       return {
-        "vue-treeselect": true,
-        "vue-treeselect--single": this.single,
-        "vue-treeselect--multi": this.multiple,
-        "vue-treeselect--searchable": this.searchable,
-        "vue-treeselect--disabled": this.disabled,
-        "vue-treeselect--focused": this.trigger.isFocused,
-        "vue-treeselect--has-value": this.hasValue,
-        "vue-treeselect--open": this.menu.isOpen,
-        "vue-treeselect--open-above": this.menu.placement === "top",
-        "vue-treeselect--open-below": this.menu.placement === "bottom",
-        "vue-treeselect--branch-nodes-disabled": this.disableBranchNodes,
-        "vue-treeselect--append-to-body": this.appendToBody
+        "vue3-treeselect": true,
+        "vue3-treeselect--single": this.single,
+        "vue3-treeselect--multi": this.multiple,
+        "vue3-treeselect--searchable": this.searchable,
+        "vue3-treeselect--disabled": this.disabled,
+        "vue3-treeselect--focused": this.trigger.isFocused,
+        "vue3-treeselect--has-value": this.hasValue,
+        "vue3-treeselect--open": this.menu.isOpen,
+        "vue3-treeselect--open-above": this.menu.placement === "top",
+        "vue3-treeselect--open-below": this.menu.placement === "bottom",
+        "vue3-treeselect--branch-nodes-disabled": this.disableBranchNodes,
+        "vue3-treeselect--append-to-body": this.appendToBody
       };
     }
   }

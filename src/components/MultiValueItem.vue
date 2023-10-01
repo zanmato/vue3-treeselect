@@ -3,7 +3,7 @@ import { onLeftClick } from "../utils";
 import DeleteIcon from "./icons/Delete.vue";
 
 export default {
-  name: "vue-treeselect--multi-value-item",
+  name: "vue3-treeselect--multi-value-item",
   inject: ["instance"],
 
   props: {
@@ -25,9 +25,9 @@ export default {
   render() {
     const { instance, node } = this;
     const itemClass = {
-      "vue-treeselect__multi-value-item": true,
-      "vue-treeselect__multi-value-item-disabled": node.isDisabled,
-      "vue-treeselect__multi-value-item-new": node.isNew
+      "vue3-treeselect__multi-value-item": true,
+      "vue3-treeselect__multi-value-item-disabled": node.isDisabled,
+      "vue3-treeselect__multi-value-item-new": node.isNew
     };
     const customValueLabelRenderer = instance.$slots["value-label"];
     const labelRenderer = customValueLabelRenderer
@@ -35,10 +35,10 @@ export default {
       : node.label;
 
     return (
-      <div class="vue-treeselect__multi-value-item-container">
+      <div class="vue3-treeselect__multi-value-item-container">
         <div class={itemClass} onMousedown={this.handleMouseDown}>
-          <span class="vue-treeselect__multi-value-label">{labelRenderer}</span>
-          <span class="vue-treeselect__icon vue-treeselect__value-remove">
+          <span class="vue3-treeselect__multi-value-label">{labelRenderer}</span>
+          <span class="vue3-treeselect__icon vue3-treeselect__value-remove">
             <DeleteIcon />
           </span>
         </div>

@@ -4,7 +4,7 @@ import { watchSize, setupResizeAndScrollEventListeners, find } from "../utils";
 import Menu from "./Menu.vue";
 
 const PortalTarget = {
-  name: "vue-treeselect--portal-target",
+  name: "vue3-treeselect--portal-target",
   inject: ["instance"],
 
   watch: {
@@ -139,7 +139,7 @@ const PortalTarget = {
   render() {
     const { instance } = this;
     const portalTargetClass = [
-      "vue-treeselect__portal-target",
+      "vue3-treeselect__portal-target",
       instance.wrapperClass
     ];
     const portalTargetStyle = { zIndex: instance.zIndex };
@@ -162,7 +162,7 @@ const PortalTarget = {
 let placeholder;
 
 export default {
-  name: "vue-treeselect--menu-portal",
+  name: "vue3-treeselect--menu-portal",
 
   created() {
     this.portalTarget = null;
@@ -203,7 +203,7 @@ export default {
 
   render() {
     if (!placeholder) {
-      placeholder = <div class="vue-treeselect__menu-placeholder" />;
+      placeholder = <div class="vue3-treeselect__menu-placeholder" />;
     }
 
     return placeholder;

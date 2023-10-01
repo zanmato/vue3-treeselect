@@ -1,14 +1,14 @@
 <script lang="jsx">
 export default {
-  name: "vue-treeselect--placeholder",
+  name: "vue3-treeselect--placeholder",
   inject: ["instance"],
 
   render() {
     const { instance } = this;
     const placeholderClass = {
-      "vue-treeselect__placeholder": true,
-      "vue-treeselect-helper-zoom-effect-off": true,
-      "vue-treeselect-helper-hide":
+      "vue3-treeselect__placeholder": true,
+      "vue3-treeselect-helper-zoom-effect-off": true,
+      "vue3-treeselect-helper-hide":
         instance.hasValue || instance.trigger.searchQuery
     };
 
