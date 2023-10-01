@@ -1,0 +1,14 @@
+{
+  "presets": [
+    "@babel/env",
+    "@babel/typescript"
+  ],
+  "plugins": [
+    "@vue/babel-plugin-jsx",
+    ["prismjs", {
+      "languages": ["javascript", "css", "markup", "bash"],
+      "plugins": ["normalize-whitespace"],
+      "css": true
+    }]
+  ]
+}
