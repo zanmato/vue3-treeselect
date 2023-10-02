@@ -3,8 +3,10 @@ const webpack = require("webpack");
 const { VueLoaderPlugin } = require("vue-loader");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
-module.exports = {
+const devConfig = {
   entry: "./docs/main.js",
 
   output: {
@@ -12,12 +14,15 @@ module.exports = {
     publicPath: "/"
   },
 
+  resolve: {
+    alias: {
+      "@": path.join(path.resolve(__dirname), "docs")
+    }
+  },
+
   plugins: [
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({ template: "./docs/index.html" }),
-    new MiniCssExtractPlugin({
-      filename: "style.css"
-    }),
     new webpack.DefinePlugin({
       PKG_VERSION: JSON.stringify(require("./package.json").version)
     })
@@ -46,27 +51,14 @@ module.exports = {
         }
       },
       {
-        test: /\.less$/,
+        test: /\.(less|css)$/,
         use: ["vue-style-loader", "css-loader", "less-loader"]
-      },
-      {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader"]
       },
       {
         test: /\.(png|jpg|jpeg|ico)/,
         type: "asset/resource",
         generator: {
-          // output filename of images
-          filename: "assets/img/[name].[hash:8][ext]"
-        }
-      },
-      {
-        test: /\.(woff|woff2|eot|ttf|otf|svg)$/i,
-        type: "asset/resource",
-        generator: {
-          // output filename of fonts
-          filename: "assets/fonts/[name][ext][query]"
+          filename: "static/img/[name].[hash:8][ext]"
         }
       },
       {
@@ -75,4 +67,92 @@ module.exports = {
       }
     ]
   }
+};
+
+const prodConfig = {
+  entry: "./docs/main.js",
+
+  output: {
+    path: path.join(__dirname, "gh-pages/"),
+    filename: "static/js/[name].[chunkhash].js",
+    chunkFilename: "[id].[chunkhash].js",
+    publicPath: "/vue3-treeselect/"
+  },
+
+  resolve: {
+    alias: {
+      "@": path.join(path.resolve(__dirname), "docs")
+    }
+  },
+
+  plugins: [
+    new VueLoaderPlugin(),
+    new HtmlWebpackPlugin({ template: "./docs/index.html" }),
+    new MiniCssExtractPlugin({
+      filename: "static/css/[name].[contenthash].css",
+      chunkFilename: "[id].css"
+    }),
+    new webpack.DefinePlugin({
+      PKG_VERSION: JSON.stringify(require("./package.json").version)
+    })
+  ],
+
+  optimization: {
+    concatenateModules: true,
+    emitOnErrors: false,
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        extractComments: false,
+        terserOptions: {
+          sourceMap: false
+        }
+      }),
+      new CssMinimizerPlugin()
+    ]
+  },
+
+  module: {
+    rules: [
+      {
+        test: /\.vue$/,
+        resourceQuery: { not: [/raw/] },
+        loader: "vue-loader",
+        options: {
+          babelParserPlugins: ["jsx", "classProperties", "decorators-legacy"],
+          compilerOptions: {
+            whitespace: "preserve"
+          }
+        }
+      },
+      {
+        test: /\.(js|jsx)$/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            plugins: ["@vue/babel-plugin-jsx"]
+          }
+        }
+      },
+      {
+        test: /\.(css|less)$/,
+        use: [MiniCssExtractPlugin.loader, "css-loader", "less-loader"]
+      },
+      {
+        test: /\.(png|jpg|jpeg|ico)/,
+        type: "asset/resource",
+        generator: {
+          filename: "static/img/[name].[hash:8][ext]"
+        }
+      },
+      {
+        resourceQuery: /raw/,
+        type: "asset/source"
+      }
+    ]
+  }
+};
+
+module.exports = (env, argv) => {
+  return argv.mode === "production" ? prodConfig : devConfig;
 };

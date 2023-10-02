@@ -45,7 +45,7 @@ import { reactive } from "vue";
 // import the component
 import Treeselect from "@zanmato/vue3-treeselect";
 // import the styles
-import "@zanmato/vue3-treeselect/dist/vue3-treeselect.css";
+import "@zanmato/vue3-treeselect/dist/vue3-treeselect.min.css";
 
 const options = [
   {
@@ -96,7 +96,7 @@ You can [open an issue](https://github.com/zanmato/vue3-treeselect/issues/new).
 1. Fork & clone the repo
 2. Install dependencies by `yarn` or `npm install`
 3. Check out a new branch
-4. `npm run docs` & hack
+4. `yarn docs` & hack
 5. Make sure the examples in the docs are working
 6. Push your changes & file a pull request
 

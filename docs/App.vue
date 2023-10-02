@@ -2,7 +2,7 @@
   <header class="site-header">
     <div id="header" class="container">
       <div class="site-header-logo">
-        <a class="site-header-logo-link" href="https://vue3-treeselect.js.org/">
+        <a class="site-header-logo-link" href="#">
           Vue3
           <span class="site-header-logo-component-name">Treeselect</span>
         </a>
@@ -31,14 +31,14 @@
         <div class="sidebar-nav" :class="{ sticky: state.isNavSticky }">
           <section
             v-for="(s, i) in sections"
-            class="sidebar-nav-section"
-            :key="i">
+            :key="i"
+            class="sidebar-nav-section">
             <h4 class="sidebar-nav-section-title">{{ s.name }}</h4>
             <template v-if="s.children">
               <ul
-                v-for="(c, i) in s.children"
-                class="sidebar-nav-list"
-                :key="i">
+                v-for="(c, j) in s.children"
+                :key="j"
+                class="sidebar-nav-list">
                 <li
                   class="sidebar-nav-list-item"
                   :class="{ current: state.currentPosition === c.id }">
@@ -93,12 +93,19 @@
         <demo name="BasicFeatures" />
 
         The first thing you need to learn is how to define options. There are
-        two types of options: <strong>a. folder options</strong> that are foldable & <i>may</i>
-        have children options, and <strong>b. normal options</strong> that aren't & don't.
-        Here, I'd like to borrow the basic concepts from Computer Science and
-        call the former as <i>branch nodes</i> & the latter as <i>leaf nodes</i>. These
-        two kinds of nodes together compose the tree. Defining leaf nodes is
-        quite simple:
+        two types of options:
+        <strong>a. folder options</strong>
+        that are foldable &
+        <i>may</i>
+        have children options, and
+        <strong>b. normal options</strong>
+        that aren't & don't. Here, I'd like to borrow the basic concepts from
+        Computer Science and call the former as
+        <i>branch nodes</i>
+        & the latter as
+        <i>leaf nodes</i>
+        . These two kinds of nodes together compose the tree. Defining leaf
+        nodes is quite simple:
 
         <pre class="language-javascript">
           <code class="language-javascript">
@@ -154,7 +161,9 @@
         If you have a large number of deeply nested options, you might want to
         load options only of the most top levels on initial load, and load the
         rest only when needed. You can achieve that by following these steps: 1.
-        Declare an <i>unloaded</i> branch node by setting
+        Declare an
+        <i>unloaded</i>
+        branch node by setting
         <code>children: null</code>
         2. Add
         <code>loadOptions</code>
@@ -186,16 +195,16 @@
 
         If you have a large number of deeply nested options, you might want to
         load options only of the most top levels on initial load, and load the
-        rest only when needed. You might also want to enable async searching
-        if the tree is very large, this combines the Delayed Loading and Async
+        rest only when needed. You might also want to enable async searching if
+        the tree is very large, this combines the Delayed Loading and Async
         Searching example.
         <demo name="AsyncSearchingDelayedLoading" />
 
         <section-header name="Flat Mode & Sort Values" :level="2" />
 
         In all previous examples, we used the default non-flat mode of
-        vue3-treeselect, which means: 1. Whenever a branch node gets checked, all
-        its children will be checked too 2. Whenever a branch node has all
+        vue3-treeselect, which means: 1. Whenever a branch node gets checked,
+        all its children will be checked too 2. Whenever a branch node has all
         children checked, the branch node itself will be checked too Sometimes
         we don't need that mechanism, and want branch nodes & leaf nodes don't
         affect each other. In this case, flat mode should be used, as
@@ -273,10 +282,13 @@
         Sometimes we need the possibility to search options within a specific
         branch. For example your branches are different restaurants and the
         leafs are the foods they order. To search for the salad order of
-        "McDonals" restaurant, just search for <strong>"mc salad"</strong>. You can also try
-        searching <strong>"salad"</strong> to feel the difference. Concretely speaking, your
-        search query gets split on spaces. If each splitted string is found
-        within the path to the node, then we have a match.
+        "McDonals" restaurant, just search for
+        <strong>"mc salad"</strong>
+        . You can also try searching
+        <strong>"salad"</strong>
+        to feel the difference. Concretely speaking, your search query gets
+        split on spaces. If each splitted string is found within the path to the
+        node, then we have a match.
         <demo name="NestedSearch" />
         <p class="tip">
           Fuzzy matching functionality is disabled for this mode to avoid
@@ -300,8 +312,8 @@
         <section-header name="Customize Option Label" :level="2" />
 
         You can customize the label of each option. vue3-treeselect utilizes
-        Vue's scoped slot feature
-        and provides some props you should use in your customized template: -
+        Vue's scoped slot feature and provides some props you should use in your
+        customized template: -
         <code>node</code>
         - a normalized node object (note that, this is differnt from what you
         return from
@@ -321,8 +333,8 @@
         <section-header name="Customize Value Label" :level="2" />
 
         You can customize the label of value item (each item in case of
-        multi-select). vue3-treeselect utilizes Vue's scoped slot feature
-        and provides some props you should use in your customized template: -
+        multi-select). vue3-treeselect utilizes Vue's scoped slot feature and
+        provides some props you should use in your customized template: -
         <code>node</code>
         - a normalized node object (note that, this is differnt from what you
         return from
@@ -333,16 +345,16 @@
         <section-header name="API" />
 
         <section-header name="Node" :level="2" />
-          <doc-node />
+        <doc-node />
 
         <section-header name="Props" :level="2" />
-          <doc-props />
+        <doc-props />
 
         <section-header name="Events" :level="2" />
-          <doc-events />
+        <doc-events />
 
         <section-header name="Slots" :level="2" />
-          <doc-slots />
+        <doc-slots />
       </div>
     </section>
   </div>
