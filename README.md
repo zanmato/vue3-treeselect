@@ -78,6 +78,12 @@ const state = reactive({
 </script>
 ```
 
+### Documentation & Live Demo
+
+[Visit the website](https://zanmato.github.io/vue3-treeselect/)
+
+Note: please use a desktop browser since the website hasn't been optimized for mobile devices.
+
 ### Browser Compatibility
 
 - Chrome
