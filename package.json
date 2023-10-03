@@ -1,6 +1,6 @@
 {
   "name": "@zanmato/vue3-treeselect",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Tree select hierarchical component for Vue 3",
   "main": "dist/vue3-treeselect.cjs.min.js",
   "unpkg": "dist/vue3-treeselect.umd.min.js",
@@ -11,7 +11,8 @@
     "build-library": "webpack build --config webpack.lib.config.js --mode production",
     "build-docs": "webpack build --config webpack.docs.config.js --mode production",
     "docs": "webpack serve --config webpack.docs.config.js --mode development",
-    "lint": "eslint --ext .js,.vue --ignore-path .gitignore src"
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore src",
+    "unit": "vitest --dom"
   },
   "dependencies": {
     "@babel/runtime": "^7.23.1",
@@ -27,9 +28,11 @@
     "@babel/core": "^7.23.0",
     "@babel/preset-env": "^7.22.20",
     "@babel/preset-typescript": "^7.23.0",
+    "@vitejs/plugin-vue": "^4.3.4",
     "@vue/babel-plugin-jsx": "^1.1.1",
     "@vue/babel-preset-jsx": "1.2.4",
     "@vue/compiler-sfc": "3.2.31",
+    "@vue/test-utils": "^2.4.1",
     "babel-loader": "^9.1.3",
     "babel-plugin-prismjs": "^2.1.0",
     "css-loader": "^6.8.1",
@@ -39,7 +42,9 @@
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-vue": "^9.17.0",
     "file-loader": "^6.2.0",
+    "happy-dom": "^12.5.0",
     "html-webpack-plugin": "^5.5.3",
+    "jasmine-expect": "^5.0.0",
     "less": "^4.2.0",
     "less-loader": "^11.1.3",
     "mini-css-extract-plugin": "^2.7.6",
@@ -48,13 +53,15 @@
     "strip-indent": "^4.0.0",
     "style-loader": "^3.3.3",
     "terser-webpack-plugin": "^5.3.9",
+    "vitest": "^0.34.6",
     "vue": "^3.3.4",
     "vue-loader": "^17.2.2",
     "vue-style-loader": "^4.1.3",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1",
-    "webpack-node-externals": "^3.0.0"
+    "webpack-node-externals": "^3.0.0",
+    "yaku": "^1.0.1"
   },
   "peerDependencies": {
     "vue": "^3.0.0"
@@ -84,6 +91,7 @@
     "hierarchy",
     "hierarchical"
   ],
+  "unmockedModulePathPatterns": ["jasmine-expect"],
   "license": "MIT",
   "repository": {
     "type": "git",
