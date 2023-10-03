@@ -205,7 +205,7 @@ const Option = {
       }
 
       return node.children.map((childNode) => (
-        <vue3-treeselect--option node={childNode} key={childNode.id} />
+        <Option node={childNode} key={childNode.id} />
       ));
     },
 

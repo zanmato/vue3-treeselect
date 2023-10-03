@@ -1,10 +1,11 @@
 {
   "name": "@zanmato/vue3-treeselect",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Tree select hierarchical component for Vue 3",
   "main": "dist/vue3-treeselect.cjs.min.js",
   "unpkg": "dist/vue3-treeselect.umd.min.js",
   "css": "dist/vue3-treeselect.min.css",
+  "style": "dist/vue3-treeselect.min.css",
   "author": "zanmato",
   "scripts": {
     "build-library": "webpack build --config webpack.lib.config.js --mode production",
@@ -83,7 +84,6 @@
     "hierarchy",
     "hierarchical"
   ],
-  "style": "dist/vue3-treeselect.css",
   "license": "MIT",
   "repository": {
     "type": "git",
