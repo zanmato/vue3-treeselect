@@ -458,9 +458,8 @@
 }
 
 .vue3-treeselect__multi-value-item {
-  .clickable();
-
   display: inline-table;
+  cursor: default;
   background: @treeselect-multi-value-item-bg;
   // Table elements do not have margin, so we set at the container element.
   padding: @treeselect-multi-value-margin-y @treeselect-multi-value-margin-x;
@@ -508,6 +507,8 @@
 }
 
 .vue3-treeselect__value-remove {
+  .clickable();
+
   color: @treeselect-multi-value-remove-color;
   padding-left: @treeselect-multi-value-padding-x;
   border-left: 1px solid @treeselect-multi-value-divider-color;
@@ -518,7 +519,7 @@
     border-right: 1px solid @treeselect-multi-value-divider-color;
   }
 
-  .vue3-treeselect__multi-value-item:hover & {
+  &:hover {
     color: @treeselect-multi-value-remove-color-hover;
   }
 

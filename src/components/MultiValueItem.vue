@@ -36,9 +36,13 @@ export default {
 
     return (
       <div class="vue3-treeselect__multi-value-item-container">
-        <div class={itemClass} onMousedown={this.handleMouseDown}>
-          <span class="vue3-treeselect__multi-value-label">{labelRenderer}</span>
-          <span class="vue3-treeselect__icon vue3-treeselect__value-remove">
+        <div class={itemClass}>
+          <span class="vue3-treeselect__multi-value-label">
+            {labelRenderer}
+          </span>
+          <span
+            class="vue3-treeselect__icon vue3-treeselect__value-remove"
+            onMousedown={this.handleMouseDown}>
             <DeleteIcon />
           </span>
         </div>
