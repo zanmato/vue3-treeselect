@@ -909,9 +909,6 @@ export default {
 
     options: {
       handler() {
-        if (this.async) {
-          return;
-        }
         // Re-initialize options when the `options` prop has changed.
         this.initialize();
         this.rootOptionsStates.isLoaded = Array.isArray(this.options);
@@ -989,9 +986,10 @@ export default {
     },
 
     initialize() {
-      const options = this.async
-        ? this.getRemoteSearchEntry().options
-        : this.options;
+      const options =
+        this.async && this.trigger.searchQuery !== ""
+          ? this.getRemoteSearchEntry().options
+          : this.options;
 
       if (Array.isArray(options)) {
         // In case we are re-initializing options, keep the old state tree temporarily.
@@ -1453,18 +1451,6 @@ export default {
         ...createAsyncOptionsStates(),
         options: []
       };
-
-      // Vue doesn't support directly watching on objects.
-      this.$watch(
-        () => entry.options,
-        () => {
-          // TODO: potential redundant re-initialization.
-          if (this.trigger.searchQuery === searchQuery) {
-            this.initialize();
-          }
-        },
-        { deep: true }
-      );
 
       if (searchQuery === "") {
         if (Array.isArray(this.options)) {

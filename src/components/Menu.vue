@@ -140,24 +140,27 @@ export default {
 
     renderAsyncSearchMenuInner() {
       const { instance } = this;
-      const entry = instance.getRemoteSearchEntry();
-      const shouldShowSearchPromptTip =
-        instance.trigger.searchQuery === "" && !instance.options;
-      const shouldShowNoResultsTip = shouldShowSearchPromptTip
-        ? false
-        : entry.isLoaded && entry.options.length === 0;
+      const isSearching = instance.trigger.searchQuery !== "";
 
-      if (shouldShowSearchPromptTip) {
+      if (!isSearching && !instance.options) {
         return this.renderSearchPromptTip();
-      } else if (entry.isLoading) {
-        return this.renderLoadingOptionsTip();
-      } else if (entry.loadingError) {
-        return this.renderAsyncSearchLoadingErrorTip();
-      } else if (shouldShowNoResultsTip) {
-        return this.renderNoResultsTip();
-      } else {
-        return this.renderOptionList();
       }
+
+      if (isSearching) {
+        const entry = instance.getRemoteSearchEntry();
+        const shouldShowNoResultsTip =
+          entry.isLoaded && entry.options.length === 0;
+
+        if (entry.isLoading) {
+          return this.renderLoadingOptionsTip();
+        } else if (entry.loadingError) {
+          return this.renderAsyncSearchLoadingErrorTip();
+        } else if (shouldShowNoResultsTip) {
+          return this.renderNoResultsTip();
+        }
+      }
+
+      return this.renderOptionList();
     },
 
     renderOptionList() {
