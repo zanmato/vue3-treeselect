@@ -91,8 +91,6 @@ Note: please use a desktop browser since the website hasn't been optimized for m
 - Firefox
 - Safari
 
-It should function well on IE9, but the style can be slightly broken due to the lack of support of some relatively new CSS features, such as `transition` and `animation`. Nevertheless it should look 90% same as on modern browsers.
-
 ### Bugs
 
 You can [open an issue](https://github.com/zanmato/vue3-treeselect/issues/new).

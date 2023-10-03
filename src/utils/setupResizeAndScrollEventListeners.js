@@ -27,14 +27,14 @@ export function setupResizeAndScrollEventListeners($el, listener) {
   const $scrollParents = findScrollParents($el);
 
   window.addEventListener("resize", listener, { passive: true });
-  $scrollParents.forEach((scrollParent) => {
+  for (const scrollParent of $scrollParents) {
     scrollParent.addEventListener("scroll", listener, { passive: true });
-  });
+  }
 
   return function removeEventListeners() {
     window.removeEventListener("resize", listener, { passive: true });
-    $scrollParents.forEach(($scrollParent) => {
+    for (const $scrollParent of $scrollParents) {
       $scrollParent.removeEventListener("scroll", listener, { passive: true });
-    });
+    }
   };
 }

@@ -359,7 +359,7 @@ export default {
      */
     limit: {
       type: Number,
-      default: Infinity
+      default: Number.POSITIVE_INFINITY
     },
 
     /**
@@ -767,17 +767,19 @@ export default {
       } else if (this.valueConsistsOf === ALL_WITH_INDETERMINATE) {
         const indeterminateNodeIds = [];
         internalValue = this.forest.selectedNodeIds.slice();
-        this.selectedNodes.forEach((selectedNode) => {
-          selectedNode.ancestors.forEach((ancestor) => {
+        for (const selectedNode of this.selectedNodes) {
+          for (const ancestor of selectedNode.ancestors) {
             if (includes(indeterminateNodeIds, ancestor.id)) {
-              return;
+              continue;
             }
+
             if (includes(internalValue, ancestor.id)) {
-              return;
+              continue;
             }
+
             indeterminateNodeIds.push(ancestor.id);
-          });
-        });
+          }
+        }
         internalValue.push(...indeterminateNodeIds);
       }
 
@@ -972,12 +974,12 @@ export default {
           "autoDeselectDescendants"
         ];
 
-        propNames.forEach((propName) => {
+        for (const propName of propNames) {
           warning(
             () => !this[propName],
             () => `"${propName}" only applies to flat mode.`
           );
-        });
+        }
       }
     },
 
@@ -1121,7 +1123,7 @@ export default {
       ) {
         nextSelectedNodeIds = nodeIdListOfPrevValue;
       } else if (this.valueConsistsOf === BRANCH_PRIORITY) {
-        nodeIdListOfPrevValue.forEach((nodeId) => {
+        for (const nodeId of nodeIdListOfPrevValue) {
           nextSelectedNodeIds.push(nodeId);
           const node = this.getNode(nodeId);
           if (node.isBranch) {
@@ -1129,7 +1131,7 @@ export default {
               nextSelectedNodeIds.push(descendant.id);
             });
           }
-        });
+        }
       } else if (this.valueConsistsOf === LEAF_PRIORITY) {
         const map = createMap();
         const queue = nodeIdListOfPrevValue.slice();
@@ -1186,16 +1188,16 @@ export default {
     keepDataOfSelectedNodes(prevNodeMap) {
       // In case there is any selected node that is not present in the new `options` array.
       // It could be useful for async search mode.
-      this.forest.selectedNodeIds.forEach((id) => {
+      for (const id of this.forest.selectedNodeIds) {
         if (!prevNodeMap[id]) {
-          return;
+          continue;
         }
         const node = {
           ...prevNodeMap[id],
           isFallbackNode: true
         };
         this.forest.nodeMap[id] = node;
-      });
+      }
     },
 
     isSelected(node) {
@@ -1223,28 +1225,28 @@ export default {
       if (!parentNode.isBranch) {
         return;
       }
-      parentNode.children.forEach((child) => {
+      for (const child of parentNode.children) {
         // deep-level node first
         this.traverseDescendantsDFS(child, callback);
         callback(child);
-      });
+      }
     },
 
     traverseAllNodesDFS(callback) {
-      this.forest.normalizedOptions.forEach((rootNode) => {
+      for (const rootNode of this.forest.normalizedOptions) {
         // deep-level node first
         this.traverseDescendantsDFS(rootNode, callback);
         callback(rootNode);
-      });
+      }
     },
 
     traverseAllNodesByIndex(callback) {
       const walk = (parentNode) => {
-        parentNode.children.forEach((child) => {
+        for (const child of parentNode.children) {
           if (callback(child) !== false && child.isBranch) {
             walk(child);
           }
-        });
+        }
       };
 
       // To simplify the code logic of traversal,
@@ -1369,15 +1371,8 @@ export default {
 
         if (node.isMatched) {
           this.localSearch.noResults = false;
-          node.ancestors.forEach(
-            (ancestor) =>
-              this.localSearch.countMap[ancestor.id][ALL_DESCENDANTS]++
-          );
-          if (node.isLeaf) {
-            node.ancestors.forEach(
-              (ancestor) =>
-                this.localSearch.countMap[ancestor.id][LEAF_DESCENDANTS]++
-            );
+          for (const ancestor of node.ancestors) {
+            this.localSearch.countMap[ancestor.id][ALL_DESCENDANTS]++;
           }
           if (node.parentNode !== NO_PARENT_NODE) {
             this.localSearch.countMap[node.parentNode.id][ALL_CHILDREN] += 1;
@@ -1660,9 +1655,9 @@ export default {
 
     buildForestState() {
       const selectedNodeMap = createMap();
-      this.forest.selectedNodeIds.forEach((selectedNodeId) => {
+      for (const selectedNodeId of this.forest.selectedNodeIds) {
         selectedNodeMap[selectedNodeId] = true;
-      });
+      }
       this.forest.selectedNodeMap = selectedNodeMap;
 
       const checkedStateMap = createMap();
@@ -1671,17 +1666,17 @@ export default {
           checkedStateMap[node.id] = UNCHECKED;
         });
 
-        this.selectedNodes.forEach((selectedNode) => {
+        for (const selectedNode of this.selectedNodes) {
           checkedStateMap[selectedNode.id] = CHECKED;
 
           if (!this.flat && !this.disableBranchNodes) {
-            selectedNode.ancestors.forEach((ancestorNode) => {
+            for (const ancestorNode of selectedNode.ancestors) {
               if (!this.isSelected(ancestorNode)) {
                 checkedStateMap[ancestorNode.id] = INDETERMINATE;
               }
-            });
+            }
           }
-        });
+        }
       }
       this.forest.checkedStateMap = checkedStateMap;
     },
@@ -1693,149 +1688,151 @@ export default {
       };
     },
 
+    mapToNode([node, raw], index, parentNode, prevNodeMap) {
+      this.checkDuplication(node);
+      this.verifyNodeShape(node);
+
+      const { id, label, children, isDefaultExpanded } = node;
+      const isRootNode = parentNode === NO_PARENT_NODE;
+      const level = isRootNode ? 0 : parentNode.level + 1;
+      const isBranch = Array.isArray(children) || children === null;
+      const isLeaf = !isBranch;
+      const isDisabled =
+        !!node.isDisabled ||
+        (!this.flat && !isRootNode && parentNode.isDisabled);
+      const isNew = !!node.isNew;
+      const lowerCased = this.matchKeys.reduce(
+        (prev, key) => ({
+          ...prev,
+          [key]: stringifyOptionPropValue(node[key]).toLocaleLowerCase()
+        }),
+        {}
+      );
+      const nestedSearchLabel = isRootNode
+        ? lowerCased.label
+        : parentNode.nestedSearchLabel + " " + lowerCased.label;
+
+      this.forest.nodeMap[id] = createMap();
+      const normalized = this.forest.nodeMap[id];
+      normalized.id = id;
+      normalized.label = label;
+      normalized.level = level;
+      normalized.ancestors = isRootNode
+        ? []
+        : [parentNode].concat(parentNode.ancestors);
+
+      normalized.index = (isRootNode ? [] : parentNode.index).concat(index);
+      normalized.parentNode = parentNode;
+      normalized.lowerCased = lowerCased;
+      normalized.nestedSearchLabel = nestedSearchLabel;
+      normalized.isDisabled = isDisabled;
+      normalized.isNew = isNew;
+      normalized.isMatched = false;
+      normalized.isHighlighted = false;
+      normalized.isBranch = isBranch;
+      normalized.isLeaf = isLeaf;
+      normalized.isRootNode = isRootNode;
+      normalized.raw = raw;
+
+      if (isBranch) {
+        const isLoaded = Array.isArray(children);
+
+        normalized.childrenStates = {
+          ...createAsyncOptionsStates(),
+          isLoaded
+        };
+        normalized.isExpanded =
+          typeof isDefaultExpanded === "boolean"
+            ? isDefaultExpanded
+            : level < this.defaultExpandLevel;
+        normalized.hasMatchedDescendants = false;
+        normalized.hasDisabledDescendants = false;
+        normalized.isExpandedOnSearch = false;
+        normalized.showAllChildrenOnSearch = false;
+        normalized.count = {
+          [ALL_CHILDREN]: 0,
+          [ALL_DESCENDANTS]: 0,
+          [LEAF_CHILDREN]: 0,
+          [LEAF_DESCENDANTS]: 0
+        };
+
+        normalized.children = isLoaded
+          ? this.normalize(normalized, children, prevNodeMap)
+          : [];
+
+        if (isDefaultExpanded === true) {
+          for (const ancestor of normalized.ancestors) {
+            ancestor.isExpanded = true;
+          }
+        }
+
+        if (!isLoaded && typeof this.loadOptions !== "function") {
+          warning(
+            () => false,
+            () =>
+              'Unloaded branch node detected. "loadOptions" prop is required to load its children.'
+          );
+        } else if (!isLoaded && normalized.isExpanded) {
+          this.loadChildrenOptions(normalized);
+        }
+      }
+
+      for (const ancestor of normalized.ancestors) {
+        ancestor.count[ALL_DESCENDANTS]++;
+      }
+
+      if (isLeaf) {
+        for (const ancestor of normalized.ancestors) {
+          ancestor.count[LEAF_DESCENDANTS]++;
+        }
+      }
+      if (!isRootNode) {
+        parentNode.count[ALL_CHILDREN] += 1;
+        if (isLeaf) {
+          parentNode.count[LEAF_CHILDREN] += 1;
+        }
+        if (isDisabled) {
+          parentNode.hasDisabledDescendants = true;
+        }
+      }
+
+      // Preserve previous states.
+      if (prevNodeMap && prevNodeMap[id]) {
+        const prev = prevNodeMap[id];
+
+        normalized.isMatched = prev.isMatched;
+        normalized.showAllChildrenOnSearch = prev.showAllChildrenOnSearch;
+        normalized.isHighlighted = prev.isHighlighted;
+
+        if (prev.isBranch && normalized.isBranch) {
+          normalized.isExpanded = prev.isExpanded;
+          normalized.isExpandedOnSearch = prev.isExpandedOnSearch;
+          // #97
+          // If `isLoaded` was true, but IS NOT now, we consider this branch node
+          // to be reset to unloaded state by the user of this component.
+          if (
+            prev.childrenStates.isLoaded &&
+            !normalized.childrenStates.isLoaded
+          ) {
+            // Make sure the node is collapsed, then the user can load its
+            // children again (by expanding).
+            normalized.isExpanded = false;
+            // We have reset `childrenStates` and don't want to preserve states here.
+          } else {
+            normalized.childrenStates = { ...prev.childrenStates };
+          }
+        }
+      }
+
+      return normalized;
+    },
+
     normalize(parentNode, nodes, prevNodeMap) {
       let normalizedOptions = nodes
         .map((node) => [this.enhancedNormalizer(node), node])
-        .map(([node, raw], index) => {
-          this.checkDuplication(node);
-          this.verifyNodeShape(node);
-
-          const { id, label, children, isDefaultExpanded } = node;
-          const isRootNode = parentNode === NO_PARENT_NODE;
-          const level = isRootNode ? 0 : parentNode.level + 1;
-          const isBranch = Array.isArray(children) || children === null;
-          const isLeaf = !isBranch;
-          const isDisabled =
-            !!node.isDisabled ||
-            (!this.flat && !isRootNode && parentNode.isDisabled);
-          const isNew = !!node.isNew;
-          const lowerCased = this.matchKeys.reduce(
-            (prev, key) => ({
-              ...prev,
-              [key]: stringifyOptionPropValue(node[key]).toLocaleLowerCase()
-            }),
-            {}
-          );
-          const nestedSearchLabel = isRootNode
-            ? lowerCased.label
-            : parentNode.nestedSearchLabel + " " + lowerCased.label;
-
-          this.forest.nodeMap[id] = createMap();
-
-          const normalized = this.forest.nodeMap[id];
-
-          normalized.id = id;
-          normalized.label = label;
-          normalized.level = level;
-          normalized.ancestors = isRootNode
-            ? []
-            : [parentNode].concat(parentNode.ancestors);
-          normalized.index = (isRootNode ? [] : parentNode.index).concat(index);
-          normalized.parentNode = parentNode;
-          normalized.lowerCased = lowerCased;
-          normalized.nestedSearchLabel = nestedSearchLabel;
-          normalized.isDisabled = isDisabled;
-          normalized.isNew = isNew;
-          normalized.isMatched = false;
-          normalized.isHighlighted = false;
-          normalized.isBranch = isBranch;
-          normalized.isLeaf = isLeaf;
-          normalized.isRootNode = isRootNode;
-          normalized.raw = raw;
-
-          if (isBranch) {
-            const isLoaded = Array.isArray(children);
-
-            normalized.childrenStates = {
-              ...createAsyncOptionsStates(),
-              isLoaded
-            };
-
-            normalized.isExpanded =
-              typeof isDefaultExpanded === "boolean"
-                ? isDefaultExpanded
-                : level < this.defaultExpandLevel;
-
-            normalized.hasMatchedDescendants = false;
-            normalized.hasDisabledDescendants = false;
-            normalized.isExpandedOnSearch = false;
-            normalized.showAllChildrenOnSearch = false;
-            normalized.count = {
-              [ALL_CHILDREN]: 0,
-              [ALL_DESCENDANTS]: 0,
-              [LEAF_CHILDREN]: 0,
-              [LEAF_DESCENDANTS]: 0
-            };
-
-            normalized.children = isLoaded
-              ? this.normalize(normalized, children, prevNodeMap)
-              : [];
-
-            if (isDefaultExpanded === true) {
-              normalized.ancestors.forEach((ancestor) => {
-                ancestor.isExpanded = true;
-              });
-            }
-
-            if (!isLoaded && typeof this.loadOptions !== "function") {
-              warning(
-                () => false,
-                () =>
-                  'Unloaded branch node detected. "loadOptions" prop is required to load its children.'
-              );
-            } else if (!isLoaded && normalized.isExpanded) {
-              this.loadChildrenOptions(normalized);
-            }
-          }
-
-          normalized.ancestors.forEach(
-            (ancestor) => ancestor.count[ALL_DESCENDANTS]++
-          );
-          if (isLeaf) {
-            normalized.ancestors.forEach(
-              (ancestor) => ancestor.count[LEAF_DESCENDANTS]++
-            );
-          }
-          if (!isRootNode) {
-            parentNode.count[ALL_CHILDREN] += 1;
-            if (isLeaf) {
-              parentNode.count[LEAF_CHILDREN] += 1;
-            }
-            if (isDisabled) {
-              parentNode.hasDisabledDescendants = true;
-            }
-          }
-
-          // Preserve previous states.
-          if (prevNodeMap && prevNodeMap[id]) {
-            const prev = prevNodeMap[id];
-
-            normalized.isMatched = prev.isMatched;
-            normalized.showAllChildrenOnSearch = prev.showAllChildrenOnSearch;
-            normalized.isHighlighted = prev.isHighlighted;
-
-            if (prev.isBranch && normalized.isBranch) {
-              normalized.isExpanded = prev.isExpanded;
-              normalized.isExpandedOnSearch = prev.isExpandedOnSearch;
-              // #97
-              // If `isLoaded` was true, but IS NOT now, we consider this branch node
-              // to be reset to unloaded state by the user of this component.
-              if (
-                prev.childrenStates.isLoaded &&
-                !normalized.childrenStates.isLoaded
-              ) {
-                // Make sure the node is collapsed, then the user can load its
-                // children again (by expanding).
-                normalized.isExpanded = false;
-                // We have reset `childrenStates` and don't want to preserve states here.
-              } else {
-                normalized.childrenStates = { ...prev.childrenStates };
-              }
-            }
-          }
-
-          return normalized;
-        });
+        .map((res, index) =>
+          this.mapToNode(res, index, parentNode, prevNodeMap)
+        );
 
       if (this.branchNodesFirst) {
         const branchNodes = normalizedOptions.filter(

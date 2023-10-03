@@ -1,6 +1,6 @@
 <script lang="jsx">
 import { createApp } from "vue";
-import { watchSize, setupResizeAndScrollEventListeners, find } from "../utils";
+import { watchSize, setupResizeAndScrollEventListeners } from "../utils";
 import Menu from "./Menu.vue";
 
 const PortalTarget = {
@@ -120,19 +120,7 @@ const PortalTarget = {
       const top =
         Math.round(controlRect.top - portalTargetRect.top + offsetY) + "px";
       const menuContainerStyle = this.$refs.menu.$refs["menu-container"].style;
-      const transformVariations = [
-        "transform",
-        "webkitTransform",
-        "MozTransform",
-        "msTransform"
-      ];
-      const transform = find(
-        transformVariations,
-        (t) => t in document.body.style
-      );
-
-      // IE9 doesn't support `translate3d()`.
-      menuContainerStyle[transform] = `translate(${left}, ${top})`;
+      menuContainerStyle.transform = `translate(${left}, ${top})`;
     }
   },
 
@@ -193,7 +181,7 @@ export default {
     },
 
     teardown() {
-      document.body.removeChild(this.portalTarget.$el);
+      this.portalTarget.$el.remove();
       this.portalTarget.$el.innerHTML = "";
 
       this.portalTarget.$destroy();

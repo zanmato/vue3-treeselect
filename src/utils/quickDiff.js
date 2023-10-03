@@ -3,8 +3,8 @@ export function quickDiff(arrA, arrB) {
     return true;
   }
 
-  for (let i = 0; i < arrA.length; i++) {
-    if (arrA[i] !== arrB[i]) {
+  for (const [i, element] of arrA.entries()) {
+    if (element !== arrB[i]) {
       return true;
     }
   }
