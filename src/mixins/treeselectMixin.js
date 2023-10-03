@@ -717,7 +717,10 @@ export default {
       },
 
       // <searchQuery, remoteSearchEntry> map.
-      remoteSearch: createMap()
+      remoteSearch: createMap(),
+
+      // Is there any branch node?
+      hasBranchNodes: false
     };
   },
 
@@ -848,15 +851,6 @@ export default {
       return typeof this.showCountOnSearch === "boolean"
         ? this.showCountOnSearch
         : this.showCount;
-    },
-    /**
-     * Is there any branch node?
-     * @type {boolean}
-     */
-    hasBranchNodes() {
-      return this.forest.normalizedOptions.some(
-        (rootNode) => rootNode.isBranch
-      );
     },
     shouldFlattenOptions() {
       return this.localSearch.active && this.flattenSearchResults;
@@ -1016,6 +1010,10 @@ export default {
         //      of these nodes. (multi-select mode)
         //   3) Async search mode.
         this.fixSelectedNodeIds(this.internalValue);
+
+        this.hasBranchNodes = this.forest.normalizedOptions.some(
+          (rootNode) => rootNode.isBranch
+        );
       } else {
         this.forest.normalizedOptions = [];
       }
