@@ -330,6 +330,18 @@
         - CSS classnames for making the style correct
         <demo name="CustomizeOptionLabel" />
 
+        <section-header name="Customize Control Arrow" :level="2" />
+
+        You can customize the control arrow using Vue's scoped slot feature. The
+        slot provides the following props for your customized template: -
+        <code>showArrow</code>
+        - a boolean indicating whether the arrow should be displayed -
+        <code>menuIsOpen</code>
+        - a boolean indicating whether the menu is currently open -
+        <code>arrowClass</code>
+        - a CSS classname for applying styles to the arrow element
+        <demo name="CustomizeControlArrow" />
+
         <section-header name="Customize Value Label" :level="2" />
 
         You can customize the label of value item (each item in case of
@@ -409,6 +421,9 @@ const sections = [
       },
       {
         name: "Customize Key Names"
+      },
+      {
+        name: "Customize Control Arrow"
       },
       {
         name: "Customize Option Label"

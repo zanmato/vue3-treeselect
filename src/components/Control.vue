@@ -84,6 +84,16 @@ export default {
         "vue3-treeselect__control-arrow--rotated": instance.menu.isOpen
       };
 
+      const customArrowRenderer = instance.$slots["control-arrow"];
+
+      if (customArrowRenderer) {
+        return customArrowRenderer({
+          showArrow: this.shouldShowArrow,
+          menuIsOpen: instance.menu.isOpen,
+          arrowClass
+        });
+      }
+
       if (!this.shouldShowArrow) {
         return null;
       }
@@ -93,6 +103,16 @@ export default {
           class="vue3-treeselect__control-arrow-container"
           onMousedown={this.handleMouseDownOnArrow}>
           <ArrowIcon class={arrowClass} />
+        </div>
+      );
+    },
+
+    renderArrowContainer() {
+      return (
+        <div
+          class="vue3-treeselect__control-arrow-container"
+          onMousedown={this.handleMouseDownOnArrow}>
+          {this.renderArrow()}
         </div>
       );
     },
@@ -158,7 +178,7 @@ export default {
         onMousedown={instance.handleMouseDown}>
         <ValueContainer ref="value-container" />
         {this.renderX()}
-        {this.renderArrow()}
+        {this.renderArrowContainer()}
       </div>
     );
   }
