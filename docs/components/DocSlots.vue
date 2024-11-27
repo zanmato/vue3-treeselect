@@ -46,6 +46,13 @@ export default {
         )} for detailed information.`
       },
       {
+        name: "control-arrow",
+        props: makePropList(["showArrow", "menuIsOpen", "arrowClass"]),
+        description: `Slot for custom control arrow template. See ${link(
+          "#customize-control-arrow"
+        )} for detailed information.`
+      },
+      {
         name: "before-list",
         props: "-",
         description: `Slot showed before the menu list.`
