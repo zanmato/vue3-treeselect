@@ -1,6 +1,6 @@
 {
   "name": "@zanmato/vue3-treeselect",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Tree select hierarchical component for Vue 3",
   "main": "dist/vue3-treeselect.cjs.min.js",
   "unpkg": "dist/vue3-treeselect.umd.min.js",
@@ -91,7 +91,9 @@
     "hierarchy",
     "hierarchical"
   ],
-  "unmockedModulePathPatterns": ["jasmine-expect"],
+  "unmockedModulePathPatterns": [
+    "jasmine-expect"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
