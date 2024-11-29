@@ -92,14 +92,22 @@ export default {
       const { instance } = this;
       const beforeListRenderer = instance.$slots["before-list"];
 
-      return beforeListRenderer ? beforeListRenderer() : null;
+      return beforeListRenderer
+        ? beforeListRenderer({
+            toggleMenu: instance.toggleMenu
+          })
+        : null;
     },
 
     renderAfterList() {
       const { instance } = this;
       const afterListRenderer = instance.$slots["after-list"];
 
-      return afterListRenderer ? afterListRenderer() : null;
+      return afterListRenderer
+        ? afterListRenderer({
+            toggleMenu: instance.toggleMenu
+          })
+        : null;
     },
 
     renderNormalMenuInner() {
@@ -177,6 +185,17 @@ export default {
 
     renderSearchPromptTip() {
       const { instance } = this;
+      const customSearchPromptRenderer = instance.$slots["search-prompt-tip"];
+
+      if (customSearchPromptRenderer) {
+        return (
+          <div class="vue3-treeselect__tip">
+            {customSearchPromptRenderer({
+              text: instance.searchPromptText
+            })}
+          </div>
+        );
+      }
 
       return (
         <Tip type="search-prompt" icon="warning">
@@ -187,6 +206,17 @@ export default {
 
     renderLoadingOptionsTip() {
       const { instance } = this;
+      const customLoadingRenderer = instance.$slots["loading-tip"];
+
+      if (customLoadingRenderer) {
+        return (
+          <div class="vue3-treeselect__tip">
+            {customLoadingRenderer({
+              text: instance.loadingText
+            })}
+          </div>
+        );
+      }
 
       return (
         <Tip type="loading" icon="loader">
@@ -197,6 +227,20 @@ export default {
 
     renderLoadingRootOptionsErrorTip() {
       const { instance } = this;
+      const customErrorRenderer = instance.$slots["root-error-tip"];
+
+      if (customErrorRenderer) {
+        return (
+          <div class="vue3-treeselect__tip">
+            {customErrorRenderer({
+              loadingError: instance.rootOptionsStates.loadingError,
+              handleRetry: instance.loadRootOptions,
+              retryTitle: instance.retryTitle,
+              retryText: instance.retryText
+            })}
+          </div>
+        );
+      }
 
       return (
         <Tip type="error" icon="error">
@@ -217,6 +261,21 @@ export default {
 
       // TODO: retryTitle?
 
+      const customErrorRenderer = instance.$slots["search-loading-error-tip"];
+
+      if (customErrorRenderer) {
+        return (
+          <div class="vue3-treeselect__tip">
+            {customErrorRenderer({
+              loadingError: entry.loadingError,
+              handleRetry: instance.handleRemoteSearch,
+              retryTitle: instance.retryTitle,
+              retryText: instance.retryText
+            })}
+          </div>
+        );
+      }
+
       return (
         <Tip type="error" icon="error">
           {entry.loadingError}
@@ -232,6 +291,18 @@ export default {
 
     renderNoAvailableOptionsTip() {
       const { instance } = this;
+      const customNoAvailableRenderer =
+        instance.$slots["no-available-options-tip"];
+
+      if (customNoAvailableRenderer) {
+        return (
+          <div class="vue3-treeselect__tip">
+            {customNoAvailableRenderer({
+              text: instance.noOptionsText
+            })}
+          </div>
+        );
+      }
 
       return (
         <Tip type="no-options" icon="warning">
@@ -242,6 +313,18 @@ export default {
 
     renderNoResultsTip() {
       const { instance } = this;
+      const customNoResultsRenderer = instance.$slots["no-results-options-tip"];
+
+      if (customNoResultsRenderer) {
+        return (
+          <div class="vue3-treeselect__tip">
+            {customNoResultsRenderer({
+              text: instance.noResultsText
+            })}
+          </div>
+        );
+      }
+
       return (
         <Tip type="no-results" icon="warning">
           {instance.noResultsText}

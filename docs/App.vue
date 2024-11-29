@@ -330,6 +330,18 @@
         - CSS classnames for making the style correct
         <demo name="CustomizeOptionLabel" />
 
+        <section-header name="Customize Value Label" :level="2" />
+
+        You can customize the label of value item (each item in case of
+        multi-select). vue3-treeselect utilizes Vue's scoped slot feature and
+        provides some props you should use in your customized template: -
+        <code>node</code>
+        - a normalized node object (note that, this is different from what you
+        return from
+        <code>normalizer()</code>
+        prop)
+        <demo name="CustomizeValueLabel" />
+
         <section-header name="Customize Control Arrow" :level="2" />
 
         You can customize the control arrow using Vue's scoped slot feature. The
@@ -338,21 +350,36 @@
         - a boolean indicating whether the arrow should be displayed -
         <code>menuIsOpen</code>
         - a boolean indicating whether the menu is currently open -
+        <code>isLoading</code>
+        - a boolean that indicates whether the options are loading or not -
         <code>arrowClass</code>
         - a CSS classname for applying styles to the arrow element
         <demo name="CustomizeControlArrow" />
 
-        <section-header name="Customize Value Label" :level="2" />
+        <section-header name="Customize Control Icon" :level="2" />
 
-        You can customize the label of value item (each item in case of
-        multi-select). vue3-treeselect utilizes Vue's scoped slot feature and
-        provides some props you should use in your customized template: -
-        <code>node</code>
-        - a normalized node object (note that, this is differnt from what you
-        return from
-        <code>normalizer()</code>
-        prop)
-        <demo name="CustomizeValueLabel" />
+        You can customize the control icon by utilizing Vue's scoped slot
+        feature. This slot does not provide any props, allowing you full control
+        over the content and style of the icon.
+        <demo name="CustomizeControlIcon" />
+
+        <section-header name="Customize Control X" :level="2" />
+
+        You can customize the control delete icon by utilizing Vue's scoped slot
+        feature. This slot provide
+        <code>xClass</code>
+        prop, allowing you full control over the content and style of the delete
+        icon.
+        <demo name="CustomizeControlX" />
+
+        <section-header name="Customize Async Searching Tip" :level="2" />
+
+        You can customize the text displayed when the async function is active.
+        This slot provides the following prop for your customized template: -
+        <code>text</code>
+        - the placeholder text that will be displayed to prompt the user to
+        start the search
+        <demo name="CustomizeAsyncSearchingTip" />
 
         <section-header name="API" />
 
@@ -423,13 +450,22 @@ const sections = [
         name: "Customize Key Names"
       },
       {
-        name: "Customize Control Arrow"
-      },
-      {
         name: "Customize Option Label"
       },
       {
         name: "Customize Value Label"
+      },
+      {
+        name: "Customize Control Arrow"
+      },
+      {
+        name: "Customize Control Icon"
+      },
+      {
+        name: "Customize Control X"
+      },
+      {
+        name: "Customize Async Searching Tip"
       }
     ]
   },
