@@ -67,12 +67,22 @@ export default {
         return null;
       }
 
+      const xClass = {
+        "vue3-treeselect__x": true
+      };
+
+      const customXRenderer = instance.$slots["control-x"];
+
       return (
         <div
           class="vue3-treeselect__x-container"
           title={title}
           onMousedown={this.handleMouseDownOnX}>
-          <DeleteIcon class="vue3-treeselect__x" />
+          {customXRenderer ? (
+            customXRenderer({ xClass })
+          ) : (
+            <DeleteIcon class={xClass} />
+          )}
         </div>
       );
     },
@@ -90,6 +100,7 @@ export default {
         return customArrowRenderer({
           showArrow: this.shouldShowArrow,
           menuIsOpen: instance.menu.isOpen,
+          isLoading: instance.rootOptionsStates.isLoading,
           arrowClass
         });
       }
@@ -98,13 +109,7 @@ export default {
         return null;
       }
 
-      return (
-        <div
-          class="vue3-treeselect__control-arrow-container"
-          onMousedown={this.handleMouseDownOnArrow}>
-          <ArrowIcon class={arrowClass} />
-        </div>
-      );
+      return <ArrowIcon class={arrowClass} />;
     },
 
     renderArrowContainer() {
@@ -172,11 +177,21 @@ export default {
     const { instance } = this;
     const ValueContainer = instance.single ? SingleValue : MultiValue;
 
+    const customIconRenderer = instance.$slots["control-icon"];
+
+    const controlClass = {
+      "vue3-treeselect__control": true,
+      "vue3-treeselect__control--has-icon": customIconRenderer
+    };
+
     return (
-      <div
-        class="vue3-treeselect__control"
-        onMousedown={instance.handleMouseDown}>
+      <div class={controlClass} onMousedown={instance.handleMouseDown}>
         <ValueContainer ref="value-container" />
+        {customIconRenderer && (
+          <div class="vue3-treeselect__control-icon-container">
+            {customIconRenderer()}
+          </div>
+        )}
         {this.renderX()}
         {this.renderArrowContainer()}
       </div>
