@@ -1505,8 +1505,9 @@ export default {
     },
 
     getMenu() {
-      const ref = this.appendToBody ? this.$refs.portal.portalTarget : this;
-      const $menu = ref.$refs.menu.$refs.menu;
+      const $menu = this.appendToBody
+        ? this.$refs.portal.$refs.menu
+        : this.$refs.menu.$refs.menu;
       return $menu && $menu.nodeName !== "#comment" ? $menu : null;
     },
 

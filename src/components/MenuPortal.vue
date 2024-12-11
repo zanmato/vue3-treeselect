@@ -151,6 +151,13 @@ let placeholder;
 
 export default {
   name: "vue3-treeselect--menu-portal",
+  inject: ["instance"],
+
+  data() {
+    return {
+      el: null
+    };
+  },
 
   created() {
     this.portalTarget = null;
@@ -172,26 +179,26 @@ export default {
         parent: this,
         ...PortalTarget
       });
+
+      const { instance } = this;
+      this.portalTarget.provide("instance", instance);
       this.portalTarget.mount(el);
-      // this.portalTarget = new Vue({
-      //   el,
-      //   parent: this,
-      //   ...PortalTarget,
-      // })
+      this.el = el;
     },
 
     teardown() {
-      this.portalTarget.$el.remove();
-      this.portalTarget.$el.innerHTML = "";
+      this.el.remove();
+      this.el.innerHTML = "";
 
-      this.portalTarget.$destroy();
       this.portalTarget = null;
     }
   },
 
   render() {
     if (!placeholder) {
-      placeholder = <div class="vue3-treeselect__menu-placeholder" />;
+      placeholder = (
+        <div ref="menu" class="vue3-treeselect__menu-placeholder" />
+      );
     }
 
     return placeholder;
