@@ -1,6 +1,6 @@
 {
   "name": "@zanmato/vue3-treeselect",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Tree select hierarchical component for Vue 3",
   "main": "dist/vue3-treeselect.cjs.min.js",
   "unpkg": "dist/vue3-treeselect.umd.min.js",
