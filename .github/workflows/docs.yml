@@ -12,14 +12,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 24
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 9
 
       - name: Build
         run: |
-          yarn install --frozen-lockfile --non-interactive
-          yarn build-docs
+          pnpm install --frozen-lockfile --non-interactive
+          pnpm build-docs
 
       - name: Fix permissions
         run: |

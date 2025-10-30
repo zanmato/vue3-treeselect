@@ -98,9 +98,9 @@ You can [open an issue](https://github.com/zanmato/vue3-treeselect/issues/new).
 ### Contributing
 
 1. Fork & clone the repo
-2. Install dependencies by `yarn` or `npm install`
+2. Install dependencies
 3. Check out a new branch
-4. `yarn docs` & hack
+4. `pnpm run docs` & hack
 5. Make sure the examples in the docs are working
 6. Push your changes & file a pull request
 
