@@ -836,6 +836,23 @@ export default {
       return visibleOptionIds;
     },
     /**
+     * Returns an array of option IDs that can be navigated to via keyboard.
+     * In normal mode, includes collapsed nodes for selection.
+     * In search mode, uses the same logic as visibleOptionIds.
+     * @type {string[]}
+     */
+    navigableOptionIds() {
+      if (this.localSearch.active) {
+        return this.visibleOptionIds;
+      }
+
+      const navigableOptionIds = [];
+      this.traverseAllNodesByIndex((node) => {
+        navigableOptionIds.push(node.id);
+      });
+      return navigableOptionIds;
+    },
+    /**
      * Has any option should be displayed in the menu?
      * @type {boolean}
      */
@@ -1559,7 +1576,7 @@ export default {
         return;
       }
 
-      const first = this.visibleOptionIds[0];
+      const first = this.navigableOptionIds[0];
       this.setCurrentHighlightedOption(this.getNode(first));
     },
 
@@ -1568,12 +1585,12 @@ export default {
         return;
       }
 
-      const prev = this.visibleOptionIds.indexOf(this.menu.current) - 1;
+      const prev = this.navigableOptionIds.indexOf(this.menu.current) - 1;
       if (prev === -1) {
         return this.highlightLastOption();
       }
       this.setCurrentHighlightedOption(
-        this.getNode(this.visibleOptionIds[prev])
+        this.getNode(this.navigableOptionIds[prev])
       );
     },
 
@@ -1582,12 +1599,12 @@ export default {
         return;
       }
 
-      const next = this.visibleOptionIds.indexOf(this.menu.current) + 1;
-      if (next === this.visibleOptionIds.length) {
+      const next = this.navigableOptionIds.indexOf(this.menu.current) + 1;
+      if (next === this.navigableOptionIds.length) {
         return this.highlightFirstOption();
       }
       this.setCurrentHighlightedOption(
-        this.getNode(this.visibleOptionIds[next])
+        this.getNode(this.navigableOptionIds[next])
       );
     },
 
@@ -1596,7 +1613,7 @@ export default {
         return;
       }
 
-      const last = getLast(this.visibleOptionIds);
+      const last = getLast(this.navigableOptionIds);
       this.setCurrentHighlightedOption(this.getNode(last));
     },
 

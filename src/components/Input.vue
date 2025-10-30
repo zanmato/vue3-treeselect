@@ -151,7 +151,7 @@ export default {
           const current = instance.getNode(instance.menu.current);
           if (
             (current.isBranch && instance.disableBranchNodes) ||
-            !current.isMatched
+            (!current.isMatched && instance.localSearch.active)
           ) {
             return;
           }
@@ -212,6 +212,16 @@ export default {
         case KEY_CODES.DELETE: {
           if (instance.deleteRemoves && !this.value.length) {
             instance.removeLastValue();
+          }
+          break;
+        }
+        case KEY_CODES.SPACE: {
+          if (instance.menu.current !== null) {
+            evt.preventDefault();
+            const current = instance.getNode(instance.menu.current);
+            if (current.isBranch) {
+              instance.toggleExpanded(current);
+            }
           }
           break;
         }
