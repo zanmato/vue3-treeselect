@@ -1,6 +1,6 @@
 <script lang="jsx">
 import { isNaN } from "../utils";
-import { defineComponent } from "vue";
+import { defineComponent, inject } from "vue";
 
 function stringifyValue(value) {
   if (typeof value === "string") {
@@ -16,30 +16,30 @@ function stringifyValue(value) {
 
 export default defineComponent({
   name: "vue3-treeselect--hidden-fields",
-  functional: true,
-  inject: ["instance"],
 
-  render(context) {
-    const instance = context.instance;
+  setup() {
+    const instance = inject("instance");
 
-    if (!instance.name || instance.disabled || !instance.hasValue) {
-      return null;
-    }
+    return () => {
+      if (!instance.name || instance.disabled || !instance.hasValue) {
+        return null;
+      }
 
-    let stringifiedValues = instance.internalValue.map(stringifyValue);
+      let stringifiedValues = instance.internalValue.map(stringifyValue);
 
-    if (instance.multiple && instance.joinValues) {
-      stringifiedValues = [stringifiedValues.join(instance.delimiter)];
-    }
+      if (instance.multiple && instance.joinValues) {
+        stringifiedValues = [stringifiedValues.join(instance.delimiter)];
+      }
 
-    return stringifiedValues.map((stringifiedValue, i) => (
-      <input
-        type="hidden"
-        name={instance.name}
-        value={stringifiedValue}
-        key={"hidden-field-" + i}
-      />
-    ));
+      return stringifiedValues.map((stringifiedValue, index) => (
+        <input
+          type="hidden"
+          name={instance.name}
+          value={stringifiedValue}
+          key={"hidden-field-" + index}
+        />
+      ));
+    };
   }
 });
 </script>
