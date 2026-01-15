@@ -1,6 +1,6 @@
 {
   "name": "@zanmato/vue3-treeselect",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Tree select hierarchical component for Vue 3",
   "main": "dist/vue3-treeselect.cjs.min.js",
   "unpkg": "dist/vue3-treeselect.umd.min.js",
@@ -28,6 +28,7 @@
     "@babel/core": "^7.23.0",
     "@babel/preset-env": "^7.22.20",
     "@babel/preset-typescript": "^7.23.0",
+    "@changesets/cli": "^2.29.8",
     "@vitejs/plugin-vue": "^4.3.4",
     "@vue/babel-plugin-jsx": "^1.1.1",
     "@vue/babel-preset-jsx": "1.2.4",
