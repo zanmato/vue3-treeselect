@@ -10,7 +10,6 @@ export default {
   inject: ["instance"],
 
   computed: {
-    /* eslint-disable valid-jsdoc */
     /**
      * Should show the "×" button that resets value?
      * @return {boolean}
@@ -53,7 +52,6 @@ export default {
         instance.internalValue.some((id) => !instance.getNode(id).isDisabled)
       );
     }
-    /* eslint-enable valid-jsdoc */
   },
 
   methods: {

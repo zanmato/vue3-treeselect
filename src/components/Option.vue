@@ -325,6 +325,5 @@ const Option = {
   }
 };
 
-// eslint-disable-next-line vue/require-direct-export
 export default Option;
 </script>

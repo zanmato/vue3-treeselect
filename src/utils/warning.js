@@ -6,7 +6,6 @@ export const warning =
     : function warning(checker, complainer) {
         if (!checker()) {
           const message = ["[Vue3-Treeselect Warning]"].concat(complainer());
-          // eslint-disable-next-line no-console
           console.error(...message);
         }
       };
