@@ -150,10 +150,6 @@ export default {
       const { instance } = this;
       const isSearching = instance.trigger.searchQuery !== "";
 
-      if (!isSearching && !instance.options) {
-        return this.renderSearchPromptTip();
-      }
-
       if (isSearching) {
         const entry = instance.getRemoteSearchEntry();
         const shouldShowNoResultsTip =
@@ -166,6 +162,10 @@ export default {
         } else if (shouldShowNoResultsTip) {
           return this.renderNoResultsTip();
         }
+      }
+
+      if (!isSearching && !instance.options) {
+        return this.renderSearchPromptTip();
       }
 
       return this.renderOptionList();
@@ -199,7 +199,7 @@ export default {
 
       return (
         <Tip type="search-prompt" icon="warning">
-          {instance.searchPromptText}
+          {{ default: () => instance.searchPromptText }}
         </Tip>
       );
     },
@@ -220,7 +220,7 @@ export default {
 
       return (
         <Tip type="loading" icon="loader">
-          {instance.loadingText}
+          {{ default: () => instance.loadingText }}
         </Tip>
       );
     },
@@ -244,13 +244,17 @@ export default {
 
       return (
         <Tip type="error" icon="error">
-          {instance.rootOptionsStates.loadingError}
-          <a
-            class="vue3-treeselect__retry"
-            onClick={instance.loadRootOptions}
-            title={instance.retryTitle}>
-            {instance.retryText}
-          </a>
+          {{
+            default: () => [
+              instance.rootOptionsStates.loadingError,
+              <a
+                class="vue3-treeselect__retry"
+                onClick={instance.loadRootOptions}
+                title={instance.retryTitle}>
+                {instance.retryText}
+              </a>
+            ]
+          }}
         </Tip>
       );
     },
@@ -278,13 +282,17 @@ export default {
 
       return (
         <Tip type="error" icon="error">
-          {entry.loadingError}
-          <a
-            class="vue3-treeselect__retry"
-            onClick={instance.handleRemoteSearch}
-            title={instance.retryTitle}>
-            {instance.retryText}
-          </a>
+          {{
+            default: () => [
+              entry.loadingError,
+              <a
+                class="vue3-treeselect__retry"
+                onClick={instance.handleRemoteSearch}
+                title={instance.retryTitle}>
+                {instance.retryText}
+              </a>
+            ]
+          }}
         </Tip>
       );
     },
@@ -306,7 +314,7 @@ export default {
 
       return (
         <Tip type="no-options" icon="warning">
-          {instance.noOptionsText}
+          {{ default: () => instance.noOptionsText }}
         </Tip>
       );
     },
@@ -327,12 +335,21 @@ export default {
 
       return (
         <Tip type="no-results" icon="warning">
-          {instance.noResultsText}
+          {{ default: () => instance.noResultsText }}
         </Tip>
       );
     },
 
     onMenuOpen() {
+      const { instance } = this;
+      const $menu = instance.getMenu();
+      const $control = instance.getControl();
+
+      // Guard against null elements in test environment or when detached from DOM
+      if (!$menu || !$control) {
+        return;
+      }
+
       this.adjustMenuOpenDirection();
       this.setupMenuSizeWatcher();
       this.setupMenuResizeAndScrollEventListeners();
@@ -351,6 +368,12 @@ export default {
 
       const $menu = instance.getMenu();
       const $control = instance.getControl();
+
+      // Guard against null elements in test environment or when detached from DOM
+      if (!$menu || !$control) {
+        return;
+      }
+
       const menuRect = $menu.getBoundingClientRect();
       const controlRect = $control.getBoundingClientRect();
       const menuHeight = menuRect.height;
@@ -431,7 +454,9 @@ export default {
         class="vue3-treeselect__menu-container"
         style={this.menuContainerStyle}>
         <Transition name="vue3-treeselect__menu--transition">
-          {this.renderMenu()}
+          {{
+            default: () => this.renderMenu()
+          }}
         </Transition>
       </div>
     );

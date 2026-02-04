@@ -265,11 +265,8 @@ export default {
       }
 
       if (!instance.searchable && !instance.disabled) {
-        deepExtend(props, {
-          attrs: {
-            tabIndex: instance.tabIndex
-          }
-        });
+        // tabIndex needs to be set directly, not in attrs
+        props.tabIndex = instance.tabIndex;
       }
 
       return (

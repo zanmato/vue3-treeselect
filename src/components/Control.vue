@@ -113,6 +113,10 @@ export default {
     },
 
     renderArrowContainer() {
+      if (!this.shouldShowArrow) {
+        return null;
+      }
+
       return (
         <div
           class="vue3-treeselect__control-arrow-container"

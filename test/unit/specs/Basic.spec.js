@@ -795,7 +795,7 @@ describe("Basic", () => {
   });
 
   it("fallback nodes should not be considered duplicate", async () => {
-    vi.spyOn(console, "error");
+    vi.spyOn(console, "error").mockClear();
 
     const DELAY = 10;
 
@@ -855,7 +855,7 @@ describe("Basic", () => {
           }
         ],
         multiple: false,
-        value: ["a"]
+        modelValue: ["a"]
       }
     });
     const { vm } = wrapper;
@@ -881,7 +881,7 @@ describe("Basic", () => {
           }
         ],
         multiple: true,
-        value: []
+        modelValue: []
       }
     });
     const { vm } = wrapper;

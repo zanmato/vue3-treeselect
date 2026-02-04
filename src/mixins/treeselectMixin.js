@@ -618,7 +618,7 @@ export default {
     },
 
     /**
-     * The value of the control.
+     * The value of the control (v-model).
      * Should be `id` or `node` object for single-select mode, or an array of `id` or `node` object for multi-select mode.
      * Its format depends on the `valueFormat` prop.
      * For most cases, just use `v-model` instead.
@@ -1414,14 +1414,22 @@ export default {
 
     handleRemoteSearch() {
       const { searchQuery } = this.trigger;
-      const entry = this.getRemoteSearchEntry();
+      const getEntry = () => this.getRemoteSearchEntry();
+      const updateEntry = (updates) => {
+        // For Vue 3 reactivity, we need to replace the entire object
+        // to ensure changes are tracked
+        this.remoteSearch[searchQuery] = {
+          ...this.remoteSearch[searchQuery],
+          ...updates
+        };
+      };
       const done = () => {
         this.initialize();
         this.resetHighlightedOptionWhenNecessary(true);
         this.menu.renderKey++;
       };
 
-      if ((searchQuery === "" || this.cacheOptions) && entry.isLoaded) {
+      if ((searchQuery === "" || this.cacheOptions) && getEntry().isLoaded) {
         return done();
       }
 
@@ -1429,16 +1437,20 @@ export default {
         action: ASYNC_SEARCH,
         args: { searchQuery },
         isPending() {
-          return entry.isLoading;
+          return getEntry().isLoading;
         },
         start: () => {
-          entry.isLoading = true;
-          entry.isLoaded = false;
-          entry.loadingError = "";
+          updateEntry({
+            isLoading: true,
+            isLoaded: false,
+            loadingError: ""
+          });
         },
         succeed: (options) => {
-          entry.isLoaded = true;
-          entry.options = options;
+          updateEntry({
+            isLoaded: true,
+            options: options
+          });
 
           // When the request completes, the search query may have changed.
           // We only show these options if they are for the current search query.
@@ -1449,10 +1461,14 @@ export default {
           done();
         },
         fail: (err) => {
-          entry.loadingError = getErrorMessage(err);
+          updateEntry({
+            loadingError: getErrorMessage(err)
+          });
         },
         end: () => {
-          entry.isLoading = false;
+          updateEntry({
+            isLoading: false
+          });
         }
       });
     },
@@ -1467,9 +1483,11 @@ export default {
       if (searchQuery === "") {
         if (Array.isArray(this.options)) {
           entry.options = this.options;
-          entry.isLoaded = true;
-          return entry;
         }
+        // For async search mode, empty search query should always be considered loaded
+        entry.isLoaded = true;
+        entry.isLoading = false;
+        return entry;
       }
 
       if (!this.remoteSearch[searchQuery]) {
@@ -1518,13 +1536,21 @@ export default {
     },
 
     getControl() {
+      // Guard against null refs in test environment or during component lifecycle transitions
+      if (!this.$refs?.control) {
+        return null;
+      }
       return this.$refs.control.$el;
     },
 
     getMenu() {
+      // Guard against null refs in test environment or during component lifecycle transitions
+      if (!this.$refs) {
+        return null;
+      }
       const $menu = this.appendToBody
-        ? this.$refs.portal.$refs.menu
-        : this.$refs.menu.$refs.menu;
+        ? this.$refs.portal?.$refs?.menu
+        : this.$refs.menu?.$refs?.menu;
       return $menu && $menu.nodeName !== "#comment" ? $menu : null;
     },
 
@@ -1540,6 +1566,10 @@ export default {
       if (this.menu.isOpen && scroll) {
         const scrollToOption = () => {
           const $menu = this.getMenu();
+          // Guard against null menu in test environment or during component lifecycle transitions
+          if (!$menu) {
+            return;
+          }
           const $option = $menu.querySelector(
             `.vue3-treeselect__option[data-id="${node.id}"]`
           );
@@ -1576,7 +1606,7 @@ export default {
         return;
       }
 
-      const first = this.navigableOptionIds[0];
+      const first = this.visibleOptionIds[0];
       this.setCurrentHighlightedOption(this.getNode(first));
     },
 
@@ -1585,12 +1615,12 @@ export default {
         return;
       }
 
-      const prev = this.navigableOptionIds.indexOf(this.menu.current) - 1;
+      const prev = this.visibleOptionIds.indexOf(this.menu.current) - 1;
       if (prev === -1) {
         return this.highlightLastOption();
       }
       this.setCurrentHighlightedOption(
-        this.getNode(this.navigableOptionIds[prev])
+        this.getNode(this.visibleOptionIds[prev])
       );
     },
 
@@ -1599,12 +1629,12 @@ export default {
         return;
       }
 
-      const next = this.navigableOptionIds.indexOf(this.menu.current) + 1;
-      if (next === this.navigableOptionIds.length) {
+      const next = this.visibleOptionIds.indexOf(this.menu.current) + 1;
+      if (next === this.visibleOptionIds.length) {
         return this.highlightFirstOption();
       }
       this.setCurrentHighlightedOption(
-        this.getNode(this.navigableOptionIds[next])
+        this.getNode(this.visibleOptionIds[next])
       );
     },
 
@@ -1613,7 +1643,7 @@ export default {
         return;
       }
 
-      const last = getLast(this.navigableOptionIds);
+      const last = getLast(this.visibleOptionIds);
       this.setCurrentHighlightedOption(this.getNode(last));
     },
 
@@ -1825,6 +1855,7 @@ export default {
         if (prev.isBranch && normalized.isBranch) {
           normalized.isExpanded = prev.isExpanded;
           normalized.isExpandedOnSearch = prev.isExpandedOnSearch;
+          normalized.hasMatchedDescendants = prev.hasMatchedDescendants;
           // #97
           // If `isLoaded` was true, but IS NOT now, we consider this branch node
           // to be reset to unloaded state by the user of this component.

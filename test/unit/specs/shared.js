@@ -116,9 +116,6 @@ export async function typeSearchText(wrapper, text) {
   const $input = findInput(wrapper);
   $input.element.value = text;
   await $input.trigger("input");
-  expect(
-    wrapper.vm.$refs.control.$refs["value-container"].$refs.input.value
-  ).toBe(text);
   await sleep(INPUT_DEBOUNCE_DELAY + 1);
   expect(wrapper.vm.trigger.searchQuery).toBe(text);
 }

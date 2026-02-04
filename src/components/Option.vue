@@ -92,7 +92,9 @@ const Option = {
             <Transition
               name="vue3-treeselect__option-arrow--prepare"
               appear={true}>
-              <ArrowIcon class={arrowClass} />
+              {{
+                default: () => <ArrowIcon class={arrowClass} />
+              }}
             </Transition>
           </div>
         );
@@ -218,7 +220,7 @@ const Option = {
 
       return (
         <Tip type="no-children" icon="warning">
-          {instance.noChildrenText}
+          {{ default: () => instance.noChildrenText }}
         </Tip>
       );
     },
@@ -232,7 +234,7 @@ const Option = {
 
       return (
         <Tip type="loading" icon="loader">
-          {instance.loadingText}
+          {{ default: () => instance.loadingText }}
         </Tip>
       );
     },
@@ -246,13 +248,17 @@ const Option = {
 
       return (
         <Tip type="error" icon="error">
-          {node.childrenStates.loadingError}
-          <a
-            class="vue3-treeselect__retry"
-            title={instance.retryTitle}
-            onMousedown={this.handleMouseDownOnRetry}>
-            {instance.retryText}
-          </a>
+          {{
+            default: () => [
+              node.childrenStates.loadingError,
+              <a
+                class="vue3-treeselect__retry"
+                title={instance.retryTitle}
+                onMousedown={this.handleMouseDownOnRetry}>
+                {instance.retryText}
+              </a>
+            ]
+          }}
         </Tip>
       );
     },
@@ -307,7 +313,9 @@ const Option = {
         {this.renderOption()}
         {node.isBranch ? (
           <Transition name="vue3-treeselect__list--transition">
-            {this.renderSubOptionsList()}
+            {{
+              default: () => this.renderSubOptionsList()
+            }}
           </Transition>
         ) : (
           ""

@@ -49,10 +49,14 @@ export default {
         tag="div"
         name="vue3-treeselect__multi-value-item--transition"
         appear={true}>
-        {this.renderMultiValueItems()}
-        {this.renderExceedLimitTip()}
-        <Placeholder key="placeholder" />
-        <Input ref="input" key="input" />
+        {{
+          default: () => [
+            this.renderMultiValueItems(),
+            this.renderExceedLimitTip(),
+            <Placeholder key="placeholder" />,
+            <Input ref="input" key="input" />
+          ]
+        }}
       </TransitionGroup>
     );
   }
