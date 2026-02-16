@@ -23,7 +23,7 @@ jobs:
 
       - name: Build
         run: |
-          pnpm install --frozen-lockfile --non-interactive
+          pnpm install --frozen-lockfile
           pnpm build-docs
 
       - name: Fix permissions
