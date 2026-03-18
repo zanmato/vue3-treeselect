@@ -91,5 +91,18 @@ module.exports = [
       libraryTarget: "umd",
       filename: "vue3-treeselect.umd.min.js"
     }
+  },
+  {
+    ...baseConfig,
+    target: ["web", "es2020"],
+    experiments: { outputModule: true },
+    externals: [nodeExternals({ importType: "module" })],
+    output: {
+      path: path.join(__dirname, "dist/"),
+      library: { type: "module" },
+      filename: "vue3-treeselect.esm.min.js",
+      module: true,
+      environment: { module: true }
+    }
   }
 ];
