@@ -3,9 +3,17 @@
   "version": "0.4.3",
   "description": "Tree select hierarchical component for Vue 3",
   "main": "dist/vue3-treeselect.cjs.min.js",
+  "module": "dist/vue3-treeselect.esm.min.js",
   "unpkg": "dist/vue3-treeselect.umd.min.js",
   "css": "dist/vue3-treeselect.min.css",
   "style": "dist/vue3-treeselect.min.css",
+  "exports": {
+    ".": {
+      "import": "./dist/vue3-treeselect.esm.min.js",
+      "require": "./dist/vue3-treeselect.cjs.min.js"
+    },
+    "./dist/*": "./dist/*"
+  },
   "author": "zanmato",
   "scripts": {
     "prepare": "npm run build-library",
