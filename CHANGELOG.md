@@ -1,5 +1,12 @@
 # @zanmato/vue3-treeselect
 
+## 0.4.4
+
+### Patch Changes
+
+- Add ESM build for Vite 8 compatibility
+- Fix space regression
+
 ## 0.4.3
 
 ### Patch Changes
