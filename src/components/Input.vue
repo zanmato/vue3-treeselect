@@ -149,9 +149,14 @@ export default {
             return;
           }
           const current = instance.getNode(instance.menu.current);
+          if (current == null) {
+            return;
+          }
+
           if (
             (current.isBranch && instance.disableBranchNodes) ||
-            (!current.isMatched && instance.localSearch.active)
+            (instance.localSearch.active &&
+              !instance.shouldOptionBeIncludedInSearchResult(current))
           ) {
             return;
           }
@@ -178,6 +183,10 @@ export default {
         }
         case KEY_CODES.ARROW_LEFT: {
           const current = instance.getNode(instance.menu.current);
+          if (current == null) {
+            return;
+          }
+
           if (current.isBranch && instance.shouldExpand(current)) {
             evt.preventDefault();
             instance.toggleExpanded(current);
@@ -198,6 +207,10 @@ export default {
         }
         case KEY_CODES.ARROW_RIGHT: {
           const current = instance.getNode(instance.menu.current);
+          if (current == null) {
+            return;
+          }
+
           if (current.isBranch && !instance.shouldExpand(current)) {
             evt.preventDefault();
             instance.toggleExpanded(current);
@@ -212,16 +225,6 @@ export default {
         case KEY_CODES.DELETE: {
           if (instance.deleteRemoves && !this.value.length) {
             instance.removeLastValue();
-          }
-          break;
-        }
-        case KEY_CODES.SPACE: {
-          if (instance.menu.current !== null) {
-            evt.preventDefault();
-            const current = instance.getNode(instance.menu.current);
-            if (current.isBranch) {
-              instance.toggleExpanded(current);
-            }
           }
           break;
         }

@@ -2126,12 +2126,25 @@ export default {
             !descendant.isDisabled ||
             this.allowSelectingDisabledDescendants
           ) {
+            // During active search, only select descendants visible in search results.
+            if (
+              this.localSearch.active &&
+              !this.shouldOptionBeIncludedInSearchResult(descendant)
+            ) {
+              return;
+            }
             this.addValue(descendant);
           }
         });
+
+        // During search, remove the branch node if not all children were selected,
+        // since selecting a parent should only affect visible children.
+        if (this.localSearch.active && isFullyChecked && !node.children.every(this.isSelected)) {
+          this.removeValue(node);
+        }
       }
 
-      if (isFullyChecked) {
+      if (isFullyChecked && this.isSelected(node)) {
         let curr = node;
         while ((curr = curr.parentNode) !== NO_PARENT_NODE) {
           if (curr.children.every(this.isSelected)) {

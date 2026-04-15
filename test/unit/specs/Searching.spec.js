@@ -8,7 +8,8 @@ import {
   findOptionByNodeId,
   findOptionArrowByNodeId,
   leftClick,
-  findCheckboxByNodeId
+  findCheckboxByNodeId,
+  findLabelContainerByNodeId
 } from "./shared";
 import Treeselect from "@/components/Treeselect.vue";
 import { INPUT_DEBOUNCE_DELAY } from "@/constants";
@@ -571,6 +572,51 @@ describe("Searching", () => {
           lowerCased: { id: "b" }
         })
       });
+    });
+
+    it("selecting a branch during search should only select visible children", async () => {
+      const wrapper = mount(Treeselect, {
+        props: {
+          alwaysOpen: true,
+          multiple: true,
+          searchable: true,
+          options: [
+            {
+              id: "fruits",
+              label: "Fruits",
+              children: [
+                { id: "apple", label: "Apple" },
+                { id: "banana", label: "Banana" },
+                { id: "cherry", label: "Cherry" }
+              ]
+            }
+          ]
+        }
+      });
+      const { vm } = wrapper;
+      await nextTick();
+
+      // Search "apple" so only Fruits and Apple are visible
+      await typeSearchText(wrapper, "apple");
+      expect(vm.localSearch.active).toBe(true);
+      expect(findVisibleOptions(wrapper).length).toBe(2);
+
+      // Select parent "Fruits". Should only select the visible child (apple).
+      const fruitsLabel = findLabelContainerByNodeId(wrapper, "fruits");
+      await leftClick(fruitsLabel);
+      await nextTick();
+
+      expect(vm.forest.selectedNodeIds).toContain("apple");
+      expect(vm.forest.selectedNodeIds).not.toContain("banana");
+      expect(vm.forest.selectedNodeIds).not.toContain("cherry");
+      expect(vm.forest.selectedNodeIds).not.toContain("fruits");
+
+      // Deselect apple. Nothing should be selected.
+      const appleLabel = findLabelContainerByNodeId(wrapper, "apple");
+      await leftClick(appleLabel);
+      await nextTick();
+
+      expect(vm.forest.selectedNodeIds).toEqual([]);
     });
   });
 

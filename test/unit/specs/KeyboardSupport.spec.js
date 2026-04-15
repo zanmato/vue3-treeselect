@@ -13,7 +13,9 @@ import {
   pressArrowRight,
   pressArrowDown,
   pressDeleteKey,
-  pressAKey
+  pressAKey,
+  findOptionArrowContainerByNodeId,
+  leftClick
 } from "./shared";
 import Treeselect from "@/components/Treeselect.vue";
 
@@ -192,6 +194,64 @@ describe("Keyboard Support", () => {
       await nextTick();
 
       pressEnterKey(wrapper);
+    });
+
+    it("should select visible-but-unmatched option via enter after collapse/expand during search", async () => {
+      const wrapper = mount(Treeselect, {
+        props: {
+          alwaysOpen: true,
+          multiple: true,
+          flat: true,
+          searchable: true,
+          options: [
+            {
+              id: "fruits",
+              label: "Fruits",
+              children: [
+                { id: "apple", label: "Apple" },
+                { id: "banana", label: "Banana" }
+              ]
+            }
+          ]
+        }
+      });
+      const { vm } = wrapper;
+
+      await nextTick();
+
+      // Search for "apple"
+      await typeSearchText(wrapper, "apple");
+      expect(vm.localSearch.active).toBe(true);
+      expect(vm.forest.nodeMap.apple.isMatched).toBe(true);
+      expect(vm.forest.nodeMap.banana.isMatched).toBe(false);
+
+      // Select "apple" via Enter
+      await pressArrowDown(wrapper);
+      expect(vm.menu.current).toBe("apple");
+      await pressEnterKey(wrapper);
+      expect(vm.internalValue).toContain("apple");
+
+      // Collapse "Fruits" via arrow click
+      const arrowContainer = findOptionArrowContainerByNodeId(
+        wrapper,
+        "fruits"
+      );
+      await leftClick(arrowContainer);
+      expect(vm.shouldExpand(vm.forest.nodeMap.fruits)).toBe(false);
+
+      // Expand "Fruits" again, which sets showAllChildrenOnSearch = true
+      await leftClick(arrowContainer);
+      expect(vm.shouldExpand(vm.forest.nodeMap.fruits)).toBe(true);
+      expect(vm.forest.nodeMap.fruits.showAllChildrenOnSearch).toBe(true);
+
+      // Navigate to "banana" (now visible due to showAllChildrenOnSearch)
+      vm.setCurrentHighlightedOption(vm.forest.nodeMap.banana);
+      expect(vm.menu.current).toBe("banana");
+
+      // Press Enter to select banana. Before the fix, this was blocked.
+      await pressEnterKey(wrapper);
+      expect(vm.internalValue).toContain("banana");
+      expect(vm.internalValue).toContain("apple");
     });
   });
 
