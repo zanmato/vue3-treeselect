@@ -1546,7 +1546,7 @@ export default {
         return null;
       }
       const $menu = this.appendToBody
-        ? this.$refs.portal?.$refs?.menu
+        ? this.$refs.portal?.$refs?.portalTarget?.$refs?.menu?.$refs?.menu
         : this.$refs.menu?.$refs?.menu;
       return $menu && $menu.nodeName !== "#comment" ? $menu : null;
     },

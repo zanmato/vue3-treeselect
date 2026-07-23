@@ -140,10 +140,8 @@ describe("Methods", () => {
       vm.openMenu();
       await nextTick();
 
-      // When appendToBody=true, the menu uses a placeholder element for the portal target
-      expect(vm.getMenu().classList).toContain(
-        "vue3-treeselect__menu-placeholder"
-      );
+      // When appendToBody=true, the menu is teleported to a portal target on document.body
+      expect(vm.getMenu().classList).toContain("vue3-treeselect__menu");
     });
 
     it("when menu is closed", async () => {

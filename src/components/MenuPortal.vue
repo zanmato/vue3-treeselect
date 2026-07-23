@@ -1,5 +1,5 @@
 <script lang="jsx">
-import { createApp } from "vue";
+import { Teleport } from "vue";
 import { watchSize, setupResizeAndScrollEventListeners } from "../utils";
 import Menu from "./Menu.vue";
 
@@ -147,61 +147,17 @@ const PortalTarget = {
   }
 };
 
-let placeholder;
-
 export default {
   name: "vue3-treeselect--menu-portal",
-  inject: ["instance"],
-
-  data() {
-    return {
-      el: null
-    };
-  },
-
-  created() {
-    this.portalTarget = null;
-  },
-
-  mounted() {
-    this.setup();
-  },
-
-  unmounted() {
-    this.teardown();
-  },
-
-  methods: {
-    setup() {
-      const el = document.createElement("div");
-      document.body.appendChild(el);
-      this.portalTarget = createApp({
-        parent: this,
-        ...PortalTarget
-      });
-
-      const { instance } = this;
-      this.portalTarget.provide("instance", instance);
-      this.portalTarget.mount(el);
-      this.el = el;
-    },
-
-    teardown() {
-      this.el.remove();
-      this.el.innerHTML = "";
-
-      this.portalTarget = null;
-    }
-  },
 
   render() {
-    if (!placeholder) {
-      placeholder = (
-        <div ref="menu" class="vue3-treeselect__menu-placeholder" />
-      );
-    }
-
-    return placeholder;
+    return (
+      <div class="vue3-treeselect__menu-placeholder">
+        <Teleport to="body">
+          <PortalTarget ref="portalTarget" />
+        </Teleport>
+      </div>
+    );
   }
 };
 </script>
