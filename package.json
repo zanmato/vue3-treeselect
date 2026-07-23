@@ -7,8 +7,10 @@
   "unpkg": "dist/vue3-treeselect.umd.min.js",
   "css": "dist/vue3-treeselect.min.css",
   "style": "dist/vue3-treeselect.min.css",
+  "types": "typings/index.d.ts",
   "exports": {
     ".": {
+      "types": "./typings/index.d.ts",
       "import": "./dist/vue3-treeselect.esm.min.js",
       "require": "./dist/vue3-treeselect.cjs.min.js"
     },
@@ -21,6 +23,7 @@
     "build-docs": "webpack build --config webpack.docs.config.js --mode production",
     "docs": "webpack serve --config webpack.docs.config.js --mode development",
     "lint": "eslint src",
+    "typecheck": "tsc --noEmit",
     "unit": "vitest --dom"
   },
   "dependencies": {
@@ -39,6 +42,7 @@
     "@babel/preset-typescript": "^7.28.5",
     "@changesets/cli": "^2.29.8",
     "@eslint/js": "^9.39.2",
+    "@types/lodash": "^4.17.24",
     "@vitejs/plugin-vue": "^6.0.4",
     "@vue/babel-plugin-jsx": "^2.0.1",
     "@vue/babel-preset-jsx": "1.4.0",
@@ -66,6 +70,8 @@
     "strip-indent": "^4.1.1",
     "style-loader": "^4.0.0",
     "terser-webpack-plugin": "^5.3.16",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.65.0",
     "vitest": "^4.0.18",
     "vue": "^3.5.27",
     "vue-loader": "^17.4.2",
@@ -90,7 +96,8 @@
   "files": [
     "dist/*.js",
     "dist/*.css",
-    "styles"
+    "styles",
+    "typings"
   ],
   "keywords": [
     "vue",

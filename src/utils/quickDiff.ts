@@ -1,4 +1,7 @@
-export function quickDiff(arrA, arrB) {
+export function quickDiff(
+  arrA: readonly unknown[],
+  arrB: readonly unknown[]
+): boolean {
   if (arrA.length !== arrB.length) {
     return true;
   }

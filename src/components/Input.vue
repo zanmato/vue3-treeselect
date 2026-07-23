@@ -4,7 +4,7 @@ import {
   MIN_INPUT_WIDTH,
   KEY_CODES,
   INPUT_DEBOUNCE_DELAY
-} from "../constants.js";
+} from "../constants";
 
 const keysThatRequireMenuBeingOpen = [
   KEY_CODES.ENTER,

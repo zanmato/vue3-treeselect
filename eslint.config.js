@@ -4,11 +4,16 @@ const pluginPrettier = require("eslint-plugin-prettier");
 const pluginVue = require("eslint-plugin-vue");
 const globals = require("globals");
 const js = require("@eslint/js");
+const tseslint = require("typescript-eslint");
 
 module.exports = defineConfig([
   ...pluginVue.configs["flat/recommended"],
+  ...tseslint.configs.recommended.map((config) => ({
+    ...config,
+    files: ["src/**/*.ts"]
+  })),
   {
-    files: ["src/**/*.{vue,js}"],
+    files: ["src/**/*.{vue,js,ts}"],
 
     plugins: {
       js: js.configs.recommended,

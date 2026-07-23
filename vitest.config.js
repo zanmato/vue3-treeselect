@@ -10,7 +10,6 @@ export default defineConfig({
     setupFiles: ["./test/unit/setup.js"]
   },
   esbuild: {
-    loader: "jsx",
     jsxFactory: "h",
     jsxFragment: "Fragment",
     jsxInject: `import { h } from "vue";`

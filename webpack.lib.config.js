@@ -14,7 +14,11 @@ https://zanmato.github.io/vue3-treeselect/
 `.trim();
 
 const baseConfig = {
-  entry: "./src/index.js",
+  entry: "./src/index.ts",
+
+  resolve: {
+    extensions: [".ts", ".js", ".json"]
+  },
 
   plugins: [
     new VueLoaderPlugin(),
@@ -55,10 +59,11 @@ const baseConfig = {
         }
       },
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(js|jsx|ts|tsx)$/,
         use: {
           loader: "babel-loader",
           options: {
+            presets: ["@babel/preset-typescript"],
             plugins: ["@vue/babel-plugin-jsx"]
           }
         }

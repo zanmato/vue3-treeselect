@@ -1,20 +1,27 @@
-function isPlainObject(value) {
+type PlainObject = Record<string, unknown>;
+
+function isPlainObject(value: unknown): value is PlainObject {
   if (value == null || typeof value !== "object") {
     return false;
   }
   return Object.getPrototypeOf(value) === Object.prototype;
 }
 
-function copy(obj, key, value) {
+function copy(obj: PlainObject, key: string, value: unknown): void {
   if (isPlainObject(value)) {
-    obj[key] || (obj[key] = {});
-    deepExtend(obj[key], value);
+    if (!obj[key]) {
+      obj[key] = {};
+    }
+    deepExtend(obj[key] as PlainObject, value);
   } else {
     obj[key] = value;
   }
 }
 
-export function deepExtend(target, source) {
+export function deepExtend<T extends PlainObject>(
+  target: T,
+  source: unknown
+): T {
   if (isPlainObject(source)) {
     const keys = Object.keys(source);
 

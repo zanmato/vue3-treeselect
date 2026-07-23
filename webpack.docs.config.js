@@ -15,6 +15,7 @@ const devConfig = {
   },
 
   resolve: {
+    extensions: [".ts", ".js", ".json"],
     alias: {
       "@": path.join(path.resolve(__dirname), "docs")
     }
@@ -42,10 +43,11 @@ const devConfig = {
         }
       },
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(js|jsx|ts|tsx)$/,
         use: {
           loader: "babel-loader",
           options: {
+            presets: ["@babel/preset-typescript"],
             plugins: ["@vue/babel-plugin-jsx"]
           }
         }
@@ -80,6 +82,7 @@ const prodConfig = {
   },
 
   resolve: {
+    extensions: [".ts", ".js", ".json"],
     alias: {
       "@": path.join(path.resolve(__dirname), "docs")
     }
@@ -126,10 +129,11 @@ const prodConfig = {
         }
       },
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(js|jsx|ts|tsx)$/,
         use: {
           loader: "babel-loader",
           options: {
+            presets: ["@babel/preset-typescript"],
             plugins: ["@vue/babel-plugin-jsx"]
           }
         }

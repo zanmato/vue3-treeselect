@@ -1,5 +1,8 @@
 // from react-select
-export function scrollIntoView($scrollingEl, $focusedEl) {
+export function scrollIntoView(
+  $scrollingEl: HTMLElement,
+  $focusedEl: HTMLElement
+): void {
   const scrollingReact = $scrollingEl.getBoundingClientRect();
   const focusedRect = $focusedEl.getBoundingClientRect();
   const overScroll = $focusedEl.offsetHeight / 3;

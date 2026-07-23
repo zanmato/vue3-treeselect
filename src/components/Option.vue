@@ -1,6 +1,6 @@
 <script lang="jsx">
 import { Transition } from "vue";
-import { UNCHECKED, INDETERMINATE, CHECKED } from "../constants.js";
+import { UNCHECKED, INDETERMINATE, CHECKED } from "../constants";
 import { onLeftClick } from "../utils";
 import Tip from "./Tip.vue";
 import ArrowIcon from "./icons/Arrow.vue";

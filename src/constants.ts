@@ -41,7 +41,7 @@ export const KEY_CODES = {
   ARROW_DOWN: 40,
   DELETE: 46,
   SPACE: 32
-};
+} as const;
 
 // Other constants.
 export const INPUT_DEBOUNCE_DELAY =
